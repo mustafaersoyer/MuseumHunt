@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MuseumHunt</string>
+    <string name="title_home">Home</string>
+    <string name="title_artifacts">Artifacts</string>
+    <string name="title_tour">Tour</string>
+    <string name="title_settings">Settings</string>
+    <string name="extended_fab_label">s</string>
+
+</resources>
