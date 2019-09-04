@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.museumhunt.Model.Artifacts;
 import com.example.museumhunt.R;
 
@@ -28,7 +29,7 @@ public class ArtifactsAdapter extends RecyclerView.Adapter<ArtifactsAdapter.Arti
 
     @NonNull
     @Override
-    public ArtifactsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    final public ArtifactsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mCtx).inflate(R.layout.artifacts_cardview, parent, false);
         return new ArtifactsViewHolder(view);
     }
@@ -38,16 +39,14 @@ public class ArtifactsAdapter extends RecyclerView.Adapter<ArtifactsAdapter.Arti
     @Override
     public void onBindViewHolder(@NonNull ArtifactsViewHolder holder, int position) {
         Artifacts artifacts = artifactsList.get(position);
-
-        /*Glide.with(mCtx)
-                .load(artifacts.getMainImageURL())
-                .into(holder.imageViewArt);*/
         Toast.makeText(mCtx, ""+artifacts.getMainImageURL(), Toast.LENGTH_SHORT).show();
-        holder.textView.setText(artifacts.getName());
+        Glide.with(mCtx)
+                .load(artifacts.getMainImageURL())
+                .into(holder.imageView);
     }
 
     @Override
-    public int getItemCount() {
+    final public int getItemCount() {
         return artifactsList.size();
     }
 
@@ -59,8 +58,7 @@ public class ArtifactsAdapter extends RecyclerView.Adapter<ArtifactsAdapter.Arti
         public ArtifactsViewHolder(View itemView) {
             super(itemView);
 
-            imageView = itemView.findViewById(R.id.imageView);
-            textView = itemView.findViewById(R.id.textView);
+            imageView = itemView.findViewById(R.id.imageViewArt);
         }
     }
 }

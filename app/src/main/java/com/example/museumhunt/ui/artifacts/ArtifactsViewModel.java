@@ -1,5 +1,7 @@
 package com.example.museumhunt.ui.artifacts;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -58,7 +60,7 @@ public class ArtifactsViewModel extends ViewModel {
         jsonObject.addProperty("id", "8962c635-d42d-43c5-b1e3-fc77fcf71b19");
 
         Api api = retrofit.create(Api.class);
-        Call<List<Artifacts>> call = api.getAllArtifacts(jsonObject);
+        Call<List<Artifacts>> call = api.getAllArtifacts("application/json",jsonObject);
 
 
         call.enqueue(new Callback<List<Artifacts>>() {
@@ -67,11 +69,13 @@ public class ArtifactsViewModel extends ViewModel {
 
                 //finally we are setting the list to our MutableLiveData
                 artifactsList.setValue(response.body());
+                Log.d("responseTag","response: "+artifactsList.toString());
+
             }
 
             @Override
             public void onFailure(Call<List<Artifacts>> call, Throwable t) {
-
+                Log.d("failTag","fail");
             }
         });
     }

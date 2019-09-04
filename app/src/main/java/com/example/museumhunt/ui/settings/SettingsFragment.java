@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.museumhunt.Adapters.SettingsRecyclerAdapter;
 import com.example.museumhunt.MainActivity;
 import com.example.museumhunt.R;
-import com.example.museumhunt.ui.AboutLocation.AboutFragment;
+import com.example.museumhunt.ui.aboutLocation.AboutFragment;
 
 import java.util.ArrayList;
 

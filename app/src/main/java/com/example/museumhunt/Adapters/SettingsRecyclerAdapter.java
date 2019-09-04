@@ -26,21 +26,21 @@ public class SettingsRecyclerAdapter extends RecyclerView.Adapter<SettingsRecycl
 
     // inflates the row layout from xml when needed
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    final public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.settings_cardview, parent, false);
         return new ViewHolder(view);
     }
 
     // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    final public void onBindViewHolder(ViewHolder holder, int position) {
         String animal = mData.get(position);
         holder.myTextView.setText(animal);
     }
 
     // total number of rows
     @Override
-    public int getItemCount() {
+    final public int getItemCount() {
         return mData.size();
     }
 
@@ -56,18 +56,18 @@ public class SettingsRecyclerAdapter extends RecyclerView.Adapter<SettingsRecycl
         }
 
         @Override
-        public void onClick(View view) {
+        final public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
         }
     }
 
     // convenience method for getting data at click position
-    public String getItem(int id) {
+    final public String getItem(int id) {
         return mData.get(id);
     }
 
     // allows clicks events to be caught
-    public void setClickListener(ItemClickListener itemClickListener) {
+    final public void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
