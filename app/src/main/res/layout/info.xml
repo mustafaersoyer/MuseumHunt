@@ -20,9 +20,10 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="Cinsiyet: " />
 
         <RadioGroup
+            android:id="@+id/rg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -31,13 +32,13 @@
                 android:id="@+id/radioMale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="RadioButton" />
+                android:text="Erkek" />
 
             <RadioButton
                 android:id="@+id/radioFemale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="RadioButton"
+                android:text="Kadın"
                 />
         </RadioGroup>
 
@@ -52,7 +53,7 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="Yaş: " />
 
         <EditText
             android:id="@+id/editTextAge"
@@ -61,6 +62,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
+            android:text="@{viewModel.userAge}"
 
              />
     </LinearLayout>
@@ -75,21 +77,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TextView" />
+            android:text="Lokasyon" />
 
         <Spinner
             android:id="@+id/spinnerLocations"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:entries="@array/array_name"
+            />
     </LinearLayout>
 
     <Button
         android:id="@+id/btnInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{()-> viewModel.onLoginClicked()}"
-        bind:toastMessage="@{viewModel.toastMessage}"
         android:text="Kaydet" />
     </LinearLayout>
 </layout>
