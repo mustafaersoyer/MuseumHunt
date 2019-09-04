@@ -21,7 +21,7 @@ public class ArtifactsAdapter extends RecyclerView.Adapter<ArtifactsAdapter.Arti
     Context mCtx;
     List<Artifacts> artifactsList;
 
-    public ArtifactsAdapter(Context mCtx, List<Artifacts> heroList) {
+    public ArtifactsAdapter(Context mCtx, List<Artifacts> artifactsList) {
         this.mCtx = mCtx;
         this.artifactsList = artifactsList;
     }
