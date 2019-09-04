@@ -34,10 +34,19 @@ public class HomeFragment extends Fragment {
         });
 
         imageView = root.findViewById(R.id.imageView);
-        String imageUrl = "http://192.168.10.78:49996/Images/Koala.jpg";
+       /* String imageUrl = "http://192.168.10.78:49996/Images/Koala.jpg";
         Glide.with(getContext())
                 .load(imageUrl)
-                .into(imageView);
+                .into(imageView);*/
+
+        String imgUrl = "http://192.168.10.78:49994/Images/Koala.jpg";
+        String imageUrl = "https://raw.githubusercontent.com/bumptech/glide/master/static/glide_logo.png";
+
+        //asd
+       Glide.with(this).load(imgUrl).into(imageView);
+
+
+
         return root;
     }
 }
