@@ -17,7 +17,7 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.example.museumhunt.ui.artifacts.ArtifactsFragment"
         android:label="@string/title_artifacts"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_artifacts" />
 
     <fragment
         android:id="@+id/navigation_notifications"

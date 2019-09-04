@@ -8,12 +8,15 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.museumhunt.Adapters.SettingsRecyclerAdapter;
+import com.example.museumhunt.MainActivity;
 import com.example.museumhunt.R;
+import com.example.museumhunt.ui.AboutLocation.AboutFragment;
 
 import java.util.ArrayList;
 
@@ -21,7 +24,6 @@ public class SettingsFragment extends Fragment implements SettingsRecyclerAdapte
 
     private SettingsViewModel settingsViewModel;
     SettingsRecyclerAdapter adapter;
-    ArrayList<String> settings;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         settingsViewModel =
@@ -30,7 +32,7 @@ public class SettingsFragment extends Fragment implements SettingsRecyclerAdapte
 
 
         final ArrayList<String> settings = new ArrayList<>();
-       settings.add("Change your museum location");
+        settings.add("Change your museum location");
         settings.add("Campaigns");
         settings.add("About");
 
@@ -44,11 +46,33 @@ public class SettingsFragment extends Fragment implements SettingsRecyclerAdapte
 
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
+
+        final Fragment fragment1 = new AboutFragment();
+
+
+        MainActivity mainActivity = new MainActivity();
+        // Create new fragment and transaction
+       /* Fragment newFragment = new AboutFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+
+// Replace whatever is in the fragment_container view with this fragment,
+// and add the transaction to the back stack
+        transaction.replace(R.id.nav_host_fragment, newFragment);
+        transaction.addToBackStack(null);
+
+// Commit the transaction
+        transaction.commit();*/
+
+        Fragment fragmentC = new AboutFragment();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.add(R.id.child_fragment, fragmentC ).commit();
+
         return root;
     }
 
     @Override
     public void onItemClick(View v, int position) {
         Toast.makeText(getContext(), "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+
     }
 }

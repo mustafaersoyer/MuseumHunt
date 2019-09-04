@@ -59,7 +59,7 @@ public class UserInfo extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                
+
             }
 
         });
