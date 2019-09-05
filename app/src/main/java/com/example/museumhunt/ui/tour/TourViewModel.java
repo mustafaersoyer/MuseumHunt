@@ -26,9 +26,8 @@ public class TourViewModel extends ViewModel {
 
 
     public TourViewModel() {
-
-        if (beaconArtId == null) {
-            beaconArtId = new MutableLiveData<BeaconArtId>();
+        if (artifacts == null) {
+            artifacts = new MutableLiveData<Artifacts>();
             //we will load it asynchronously from server in this method
             loadArtifacts();
         }
@@ -52,17 +51,18 @@ public class TourViewModel extends ViewModel {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-
         TourFragment tourFragment = new TourFragment();
-
 
         JsonObject jsonObject = new JsonObject();
        /* jsonObject.addProperty("uuid", "1231");
         jsonObject.addProperty("major", "343");
         jsonObject.addProperty("minor", "22");*/
-         jsonObject.addProperty("uuid",tourFragment.uuid);
+        jsonObject.addProperty("uuid",tourFragment.uuid);
         jsonObject.addProperty("major", tourFragment.major);
         jsonObject.addProperty("minor", tourFragment.minor);
+      /* jsonObject.addProperty("uuid","c3a55f0f-5ba6-4b01-a1c2-e251fd0e1ed4");
+        jsonObject.addProperty("major", "64273");
+        jsonObject.addProperty("minor", "64807");*/
 
         final Api api = retrofit.create(Api.class);
         Call<BeaconArtId> call = api.getBeaconByUUID("application/json",jsonObject);
@@ -73,16 +73,17 @@ public class TourViewModel extends ViewModel {
             public void onResponse(Call<BeaconArtId> call, Response<BeaconArtId> response) {
 
                 //finally we are setting the list to our MutableLiveData
-                Log.d("rspTag","responsebody "+response.body().toString());
+                Log.d("rspTag","responsebody "+response.body().getId());
 
                 artifactID = response.body().toString();
-                beaconArtId.setValue(response.body());
-                Log.d("responseTag","response: "+beaconArtId.getValue());
+             //   beaconArtId.setValue(response.body());
+//                Log.d("responseTag","response: "+beaconArtId.getValue());
                 jsonObject1  = new JsonObject();
                // jsonObject1.addProperty("id", beaconArtId.getValue().toString());
                 //jsonObject1.addProperty("id", "497a2d0e-7a2f-4a00-ae56-08d72a29f302");
-                jsonObject1.addProperty("id", beaconArtId.getValue().getId());
-                Log.d("artid",""+beaconArtId.getValue().getId());
+               // jsonObject1.addProperty("id", beaconArtId.getValue().getId());
+                jsonObject1.addProperty("id", response.body().getId());
+               // Log.d("artid",""+beaconArtId.getValue().getId());
                 Log.d("jsonnn",""+jsonObject1.toString());
                 call1 = api.getArtifacts("application/json",jsonObject1);
 
