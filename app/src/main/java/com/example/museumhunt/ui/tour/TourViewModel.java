@@ -25,8 +25,8 @@ public class TourViewModel extends ViewModel {
     Call<Artifacts> call1;
 
 
-
     public TourViewModel() {
+
         if (beaconArtId == null) {
             beaconArtId = new MutableLiveData<BeaconArtId>();
             //we will load it asynchronously from server in this method
@@ -52,10 +52,17 @@ public class TourViewModel extends ViewModel {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+
+        TourFragment tourFragment = new TourFragment();
+
+
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("uuid", "1231");
+       /* jsonObject.addProperty("uuid", "1231");
         jsonObject.addProperty("major", "343");
-        jsonObject.addProperty("minor", "22");
+        jsonObject.addProperty("minor", "22");*/
+         jsonObject.addProperty("uuid",tourFragment.uuid);
+        jsonObject.addProperty("major", tourFragment.major);
+        jsonObject.addProperty("minor", tourFragment.minor);
 
         final Api api = retrofit.create(Api.class);
         Call<BeaconArtId> call = api.getBeaconByUUID("application/json",jsonObject);
@@ -73,13 +80,9 @@ public class TourViewModel extends ViewModel {
                 Log.d("responseTag","response: "+beaconArtId.getValue());
                 jsonObject1  = new JsonObject();
                // jsonObject1.addProperty("id", beaconArtId.getValue().toString());
-                BeaconArtId beaconArtId = new BeaconArtId();
                 //jsonObject1.addProperty("id", "497a2d0e-7a2f-4a00-ae56-08d72a29f302");
-               jsonObject1.addProperty("id", beaconArtId.getId());
-               Log.d("artid",""+beaconArtId.getId());
-
-
-
+                jsonObject1.addProperty("id", beaconArtId.getValue().getId());
+                Log.d("artid",""+beaconArtId.getValue().getId());
                 Log.d("jsonnn",""+jsonObject1.toString());
                 call1 = api.getArtifacts("application/json",jsonObject1);
 
@@ -101,22 +104,14 @@ public class TourViewModel extends ViewModel {
                         Log.d("tourviewfail","fail: "+ t.toString());
                     }
                 });
-
             }
-
             @Override
             public void onFailure(Call<BeaconArtId> call, Throwable t) {
                 Log.d("failTag","fasssil");
             }
         });
-
-
-
-
-
-        //Log.d("jsonnn",""+jsonObject1.toString());
-
-
     }
+
+
 
 }
