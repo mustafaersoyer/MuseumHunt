@@ -1,6 +1,7 @@
 package com.example.museumhunt.Api;
 
 import com.example.museumhunt.Model.Artifacts;
+import com.example.museumhunt.Model.BeaconArtId;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -17,4 +18,10 @@ public interface Api {
     @Headers({"Accept: application/json","Content-Type: application/json"})
     @POST("Artifact/GetAllArtifacts")
     Call<List<Artifacts>> getAllArtifacts(@Header("Content-Type") String type, @Body JsonObject body);
+
+    @POST("Beacon/GetBeaconByUUID")
+    Call<BeaconArtId> getBeaconByUUID(@Header("Content-Type") String type, @Body JsonObject body);
+
+    @POST("Artifact/GetArtifact")
+    Call<Artifacts> getArtifacts(@Header("Content-Type") String type, @Body JsonObject body);
 }

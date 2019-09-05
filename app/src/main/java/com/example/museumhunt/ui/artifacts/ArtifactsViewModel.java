@@ -20,7 +20,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ArtifactsViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
     private MutableLiveData<List<Artifacts>> artifactsList;
 
     public ArtifactsViewModel() {
@@ -29,9 +28,6 @@ public class ArtifactsViewModel extends ViewModel {
             //we will load it asynchronously from server in this method
             loadArtifacts();
         }
-
-        mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
     }
 
     public LiveData<List<Artifacts>> getAllArtifacts() {
@@ -44,10 +40,6 @@ public class ArtifactsViewModel extends ViewModel {
 
         //finally we will return the list
         return artifactsList;
-    }
-
-    public LiveData<String> getText() {
-        return mText;
     }
 
     private void loadArtifacts() {

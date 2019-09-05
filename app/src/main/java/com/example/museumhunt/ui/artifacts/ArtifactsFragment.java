@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.museumhunt.Adapters.ArtifactsAdapter;
@@ -19,8 +20,6 @@ import com.example.museumhunt.R;
 import java.util.List;
 
 public class ArtifactsFragment extends Fragment {
-
-
 
     private ArtifactsViewModel artifactsViewModel;
     ArtifactsAdapter adapter;
@@ -34,6 +33,8 @@ public class ArtifactsFragment extends Fragment {
         final RecyclerView recyclerView;
 
         recyclerView = root.findViewById(R.id.recyclerViewArt);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         artifactsViewModel.getAllArtifacts().observe(this, new Observer<List<Artifacts>>() {
             @Override
@@ -44,13 +45,6 @@ public class ArtifactsFragment extends Fragment {
         });
 
 
-       /* final TextView textView = root.findViewById(R.id.text_dashboard);
-        artifactsViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
         return root;
     }
 }
