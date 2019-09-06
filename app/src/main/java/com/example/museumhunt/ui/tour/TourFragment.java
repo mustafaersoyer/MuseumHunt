@@ -44,21 +44,19 @@ public class TourFragment extends Fragment implements BeaconConsumer {
 
     private TourViewModel tourViewModel;
     SingleArtifactsAdapter adapter;
-     RecyclerView recyclerView;
+    RecyclerView recyclerView;
     public String uuid="1231",
             major="343",minor="22";
 
-
     long startTime = 0;
     boolean enter=true;
-
+    Context context;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_tour, container, false);
         FloatingActionButton floatingActionButton = root.findViewById(R.id.fab);
-
 
         recyclerView = root.findViewById(R.id.recyclerViewTour);
         recyclerView.setHasFixedSize(true);
@@ -74,6 +72,8 @@ public class TourFragment extends Fragment implements BeaconConsumer {
                 startBeaconMonitoring();
             }
         });
+
+        context = inflater.getContext();
 
         return root;
     }
@@ -107,7 +107,7 @@ public class TourFragment extends Fragment implements BeaconConsumer {
             //beaconRegion = new Region("MyBeacons ", null,null,null);
             // beaconRegion = new Region("E2C Beacon", Identifier.parse("e2c56DB5-DFFB-48D2-B060-D0F5A71096E0"),Identifier.parse("0"),Identifier.parse("5"));
             // beaconRegion = new Region("E2C Beacon", Identifier.parse("d897f728-20e6-4780-b90c-bbbc79f6d429"),Identifier.parse("38045"),Identifier.parse("9566"));
-            beaconRegion = new Region("E2C Beacon", Identifier.parse("c3a55f0f-5ba6-4b01-a1c2-e251fd0e1ed4"),Identifier.parse("64273"),Identifier.parse("64807"));
+            beaconRegion = new Region("E2C Beacon", Identifier.parse("8861d9cb-39e6-4b90-8308-4eb5da394cc4"),Identifier.parse("19"),Identifier.parse("5"));
 
             beaconManager.startMonitoringBeaconsInRegion(beaconRegion);
         }catch (RemoteException e){
@@ -117,7 +117,7 @@ public class TourFragment extends Fragment implements BeaconConsumer {
 
     void getPermission(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (getContext().checkSelfPermission(Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
+            if (getContext().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle("This app needs location access");
                 builder.setMessage("Please grant location access so this app can detect beacons in the background.");
@@ -127,8 +127,7 @@ public class TourFragment extends Fragment implements BeaconConsumer {
                     @TargetApi(23)
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        requestPermissions(new String[]{Manifest.permission.BLUETOOTH},
-                                123);
+                        requestPermissions(new String[]{Manifest.permission.BLUETOOTH,Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION},                                123);
                     }
                 });
                 builder.show();
@@ -143,13 +142,14 @@ public class TourFragment extends Fragment implements BeaconConsumer {
             @Override
             public void didEnterRegion(Region region) {
                 if (!entryMessageRaised) {
-                    Toast.makeText(getContext(), "Enter Region", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Enter Region", Toast.LENGTH_SHORT).show();
 
                     try {
                         //beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
                         //beaconRegion = new Region("E2C Beacon", Identifier.parse("e2c56DB5-DFFB-48D2-B060-D0F5A71096E0"),Identifier.parse("0"),Identifier.parse("5"));
                         //beaconRegion = new Region("E2C Beacon", Identifier.parse("d897f728-20e6-4780-b90c-bbbc79f6d429"),Identifier.parse("38045"),Identifier.parse("9566"));//tx0
-                         beaconRegion = new Region("E2C Beacon", Identifier.parse("c3a55f0f-5ba6-4b01-a1c2-e251fd0e1ed4"),Identifier.parse("64273"),Identifier.parse("64807"));
+                        // beaconRegion = new Region("E2C Beacon", Identifier.parse("c3a55f0f-5ba6-4b01-a1c2-e251fd0e1ed4"),Identifier.parse("64273"),Identifier.parse("64807"));
+                         beaconRegion = new Region("E2C Beacon", Identifier.parse("8861d9cb-39e6-4b90-8308-4eb5da394cc4"),Identifier.parse("19"),Identifier.parse("5"));
                         Toast.makeText(getContext(), "Enter Region TRY", Toast.LENGTH_SHORT).show();
 
                         beaconManager.startRangingBeaconsInRegion(beaconRegion);
@@ -185,7 +185,7 @@ public class TourFragment extends Fragment implements BeaconConsumer {
                                             long endTime = System.currentTimeMillis();
                                             long estimatedTime = endTime - startTime; // Geçen süreyi milisaniye cinsinden elde ediyoruz
                                             double seconds = ((double) estimatedTime / 1000);
-                                            Toast.makeText(getContext(), "Süre" + seconds, Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(context, "Süre" + seconds, Toast.LENGTH_SHORT).show();
 
                                         }
                                     }
@@ -204,22 +204,21 @@ public class TourFragment extends Fragment implements BeaconConsumer {
 
             @Override
             public void didExitRegion(Region region) {
-                if (!exitMessageRaised){
-                    exitMessageRaised=true;
-                }
+                if (!exitMessageRaised) exitMessageRaised=true;
             }
 
             @Override
-            public void didDetermineStateForRegion(int i, Region region) {
-
-            }
+            public void didDetermineStateForRegion(int i, Region region) {}
         });
 
     }
 
     @Override
     public Context getApplicationContext() {
-        return getActivity().getApplicationContext();
+        if (getActivity() != null)
+            return getActivity().getApplicationContext();
+        else
+            return null;
 
     }
 
