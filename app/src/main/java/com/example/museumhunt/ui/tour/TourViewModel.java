@@ -23,46 +23,36 @@ public class TourViewModel extends ViewModel {
     private MutableLiveData<BeaconArtId> beaconArtId;
     private MutableLiveData<Artifacts> artifacts;
     Call<Artifacts> call1;
+    String uuid,major,minor;
 
 
     public TourViewModel() {
-        if (artifacts == null) {
-            artifacts = new MutableLiveData<Artifacts>();
-            //we will load it asynchronously from server in this method
-            loadArtifacts();
-        }
+
     }
 
-    public LiveData<Artifacts> getArtifacts() {
-        //if the list is null
+    public LiveData<Artifacts> getArtifacts(String uuid,String major,String minor) {
         if (artifacts == null) {
             artifacts = new MutableLiveData<Artifacts>();
-            //we will load it asynchronously from server in this method
-            loadArtifacts();
+            this.uuid=uuid;
+            this.major=major;
+            this.minor=minor;
+
+            loadArtifacts(this.uuid,this.major,this.minor);
         }
 
-        //finally we will return the list
         return artifacts;
     }
     JsonObject jsonObject1;
-    private void loadArtifacts() {
+    private void loadArtifacts(String uuid,String major,String minor) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Api.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        TourFragment tourFragment = new TourFragment();
-
         JsonObject jsonObject = new JsonObject();
-       /* jsonObject.addProperty("uuid", "1231");
-        jsonObject.addProperty("major", "343");
-        jsonObject.addProperty("minor", "22");*/
-        jsonObject.addProperty("uuid",tourFragment.uuid);
-        jsonObject.addProperty("major", tourFragment.major);
-        jsonObject.addProperty("minor", tourFragment.minor);
-      /* jsonObject.addProperty("uuid","c3a55f0f-5ba6-4b01-a1c2-e251fd0e1ed4");
-        jsonObject.addProperty("major", "64273");
-        jsonObject.addProperty("minor", "64807");*/
+        jsonObject.addProperty("uuid",uuid);
+        jsonObject.addProperty("major", major);
+        jsonObject.addProperty("minor", minor);
 
         final Api api = retrofit.create(Api.class);
         Call<BeaconArtId> call = api.getBeaconByUUID("application/json",jsonObject);
@@ -71,29 +61,18 @@ public class TourViewModel extends ViewModel {
         call.enqueue(new Callback<BeaconArtId>() {
             @Override
             public void onResponse(Call<BeaconArtId> call, Response<BeaconArtId> response) {
-
-                //finally we are setting the list to our MutableLiveData
-                Log.d("rspTag","responsebody "+response.body().getId());
+                Log.d("rspTag","responsebody "+response.body());
 
                 artifactID = response.body().toString();
-             //   beaconArtId.setValue(response.body());
-//                Log.d("responseTag","response: "+beaconArtId.getValue());
+
                 jsonObject1  = new JsonObject();
-               // jsonObject1.addProperty("id", beaconArtId.getValue().toString());
-                //jsonObject1.addProperty("id", "497a2d0e-7a2f-4a00-ae56-08d72a29f302");
-               // jsonObject1.addProperty("id", beaconArtId.getValue().getId());
                 jsonObject1.addProperty("id", response.body().getId());
-               // Log.d("artid",""+beaconArtId.getValue().getId());
                 Log.d("jsonnn",""+jsonObject1.toString());
                 call1 = api.getArtifacts("application/json",jsonObject1);
 
                 call1.enqueue(new Callback<Artifacts>() {
                     @Override
                     public void onResponse(Call<Artifacts> call, Response<Artifacts> response) {
-
-                        //finally we are setting the list to our MutableLiveData
-                        //artifactID = response.body().toString();
-                        //beaconArtId.setValue(response.body());
                         artifacts.setValue(response.body());
                         Log.d("responseArtifactsss","artifact: "+artifacts.toString());
                         Log.d("responseBooooody","responsebody: "+response.body().toString()); //boş

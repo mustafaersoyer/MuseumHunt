@@ -1,13 +1,10 @@
 package com.example.museumhunt.Adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,13 +33,9 @@ public class ArtifactsAdapter extends RecyclerView.Adapter<ArtifactsAdapter.Arti
     }
 
 
-
     @Override
     public void onBindViewHolder(@NonNull ArtifactsViewHolder holder, int position) {
         Artifacts artifacts = artifactsList.get(position);
-        Log.d("artifacts","artifacts: "+artifacts);
-
-        Toast.makeText(mCtx, "192.168.10.78:49994"+artifacts.getMainImageURL(), Toast.LENGTH_SHORT).show();
         Glide.with(mCtx)
                 .load("http://192.168.10.78:49994"+artifacts.getMainImageURL())
                 .into(holder.imageView);
@@ -56,8 +49,6 @@ public class ArtifactsAdapter extends RecyclerView.Adapter<ArtifactsAdapter.Arti
     class ArtifactsViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
-        TextView textView;
-
         public ArtifactsViewHolder(View itemView) {
             super(itemView);
 

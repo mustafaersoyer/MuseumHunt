@@ -33,7 +33,6 @@ public class UserInfo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.info);
         InfoBinding infoBinding = DataBindingUtil.setContentView(this, R.layout.info);
         infoBinding.setViewModel(new UserInfoViewModel());
         infoBinding.executePendingBindings();
@@ -47,8 +46,6 @@ public class UserInfo extends AppCompatActivity {
         viewBind();
 
         userInfoVM = new UserInfoViewModel();
-
-
 
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

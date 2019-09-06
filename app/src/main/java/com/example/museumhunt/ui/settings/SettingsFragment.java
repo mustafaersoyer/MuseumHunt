@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.museumhunt.Adapters.SettingsRecyclerAdapter;
-import com.example.museumhunt.MainActivity;
 import com.example.museumhunt.R;
 import com.example.museumhunt.ui.aboutLocation.AboutFragment;
 
@@ -36,32 +35,13 @@ public class SettingsFragment extends Fragment implements SettingsRecyclerAdapte
         settings.add("Campaigns");
         settings.add("About");
 
-
-        // set up the RecyclerView
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
 
         adapter = new SettingsRecyclerAdapter(getContext(), settings);
 
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
-
-        final Fragment fragment1 = new AboutFragment();
-
-
-        MainActivity mainActivity = new MainActivity();
-        // Create new fragment and transaction
-       /* Fragment newFragment = new AboutFragment();
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-
-// Replace whatever is in the fragment_container view with this fragment,
-// and add the transaction to the back stack
-        transaction.replace(R.id.nav_host_fragment, newFragment);
-        transaction.addToBackStack(null);
-
-// Commit the transaction
-        transaction.commit();*/
 
         Fragment fragmentC = new AboutFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();

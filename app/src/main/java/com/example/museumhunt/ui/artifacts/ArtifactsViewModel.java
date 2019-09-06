@@ -25,20 +25,16 @@ public class ArtifactsViewModel extends ViewModel {
     public ArtifactsViewModel() {
         if (artifactsList == null) {
             artifactsList = new MutableLiveData<List<Artifacts>>();
-            //we will load it asynchronously from server in this method
             loadArtifacts();
         }
     }
 
     public LiveData<List<Artifacts>> getAllArtifacts() {
-        //if the list is null
         if (artifactsList == null) {
             artifactsList = new MutableLiveData<List<Artifacts>>();
-            //we will load it asynchronously from server in this method
             loadArtifacts();
         }
 
-        //finally we will return the list
         return artifactsList;
     }
 

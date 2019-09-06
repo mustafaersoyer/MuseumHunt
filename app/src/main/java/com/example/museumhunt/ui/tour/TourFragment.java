@@ -45,6 +45,13 @@ public class TourFragment extends Fragment implements BeaconConsumer {
     private TourViewModel tourViewModel;
     SingleArtifactsAdapter adapter;
      RecyclerView recyclerView;
+    public String uuid="1231",
+            major="343",minor="22";
+
+
+    long startTime = 0;
+    boolean enter=true;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -56,7 +63,8 @@ public class TourFragment extends Fragment implements BeaconConsumer {
         recyclerView = root.findViewById(R.id.recyclerViewTour);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        tourViewModel =
+                ViewModelProviders.of(getActivity()).get(TourViewModel.class);
         beaconSet();
         getPermission();
 
@@ -64,23 +72,6 @@ public class TourFragment extends Fragment implements BeaconConsumer {
             @Override
             public void onClick(View view) {
                 startBeaconMonitoring();
-            }
-        });
-
-        uuid ="c3a55f0f-5ba6-4b01-a1c2-e251fd0e1ed4";
-        major="64273";
-        minor="64807";
-
-        tourViewModel =
-                ViewModelProviders.of(this).get(TourViewModel.class);
-
-        Toast.makeText(getContext(), "Start Tour", Toast.LENGTH_SHORT).show();
-
-        tourViewModel.getArtifacts().observe(this, new Observer<Artifacts>() {
-            @Override
-            public void onChanged(Artifacts artifacts) {
-                adapter = new SingleArtifactsAdapter(getContext(), artifacts);
-                recyclerView.setAdapter(adapter);
             }
         });
 
@@ -101,14 +92,9 @@ public class TourFragment extends Fragment implements BeaconConsumer {
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(iBeaconLayout));
         beaconManager.bind(this);
 
-        //beaconManager.setForegroundScanPeriod(1500l);
-
-        // beaconManager.setForegroundBetweenScanPeriod(5000l);
         beaconManager.setRegionExitPeriod(1000l);
         Log.d("exitTag",""+beaconManager.getForegroundScanPeriod());
         Log.d("exitTag",""+beaconManager.getForegroundBetweenScanPeriod());
-       /* beaconManager.setBackgroundScanPeriod(1100l);
-        beaconManager.setBackgroundBetweenScanPeriod(10000l);*/
 
     }
     public void startBeaconMonitoring(){
@@ -119,13 +105,11 @@ public class TourFragment extends Fragment implements BeaconConsumer {
             entryMessageRaised=false;
 
             //beaconRegion = new Region("MyBeacons ", null,null,null);
-            //   beaconRegion = new Region("E2C Beacon", Identifier.parse("e2c56DB5-DFFB-48D2-B060-D0F5A71096E0"),Identifier.parse("0"),Identifier.parse("5"));
+            // beaconRegion = new Region("E2C Beacon", Identifier.parse("e2c56DB5-DFFB-48D2-B060-D0F5A71096E0"),Identifier.parse("0"),Identifier.parse("5"));
             // beaconRegion = new Region("E2C Beacon", Identifier.parse("d897f728-20e6-4780-b90c-bbbc79f6d429"),Identifier.parse("38045"),Identifier.parse("9566"));
             beaconRegion = new Region("E2C Beacon", Identifier.parse("c3a55f0f-5ba6-4b01-a1c2-e251fd0e1ed4"),Identifier.parse("64273"),Identifier.parse("64807"));
 
             beaconManager.startMonitoringBeaconsInRegion(beaconRegion);
-            //beaconManager.startRangingBeaconsInRegion(beaconRegion);
-            //arkaplan için rangingbootstrap
         }catch (RemoteException e){
             e.printStackTrace();
         }
@@ -133,7 +117,6 @@ public class TourFragment extends Fragment implements BeaconConsumer {
 
     void getPermission(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // Android M Permission check
             if (getContext().checkSelfPermission(Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle("This app needs location access");
@@ -153,8 +136,6 @@ public class TourFragment extends Fragment implements BeaconConsumer {
         }
     }
 
-    long startTime = 0;
-    String uuid,major,minor;
     @Override
     public void onBeaconServiceConnect() {
         Log.d(TAG,"onBeaconServiceConnect Called");
@@ -162,8 +143,6 @@ public class TourFragment extends Fragment implements BeaconConsumer {
             @Override
             public void didEnterRegion(Region region) {
                 if (!entryMessageRaised) {
-                    //startTime = System.currentTimeMillis();
-                 //   showAlert("Enter Region", "Beacon detected! Distance:" + " UUID: " + region.getId1() + "/" + region.getId2() + "/" + region.getId3());
                     Toast.makeText(getContext(), "Enter Region", Toast.LENGTH_SHORT).show();
 
                     try {
@@ -183,10 +162,24 @@ public class TourFragment extends Fragment implements BeaconConsumer {
                         public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
                             if (!rangingMessageRaised && beacons != null && !beacons.isEmpty()) {
                                 for (Beacon beacon : beacons) {
-                                    if (beacon.getRssi() > -80.0) {
+                                    if (beacon.getRssi() > -60.0) {
                                         uuid = beacon.getId1().toString();
-                                        major = beacon.getId1().toString();
-                                        minor = beacon.getId1().toString();
+                                        major = beacon.getId2().toString();
+                                        minor = beacon.getId3().toString();
+
+                                        recyclerView.setVisibility(View.VISIBLE);
+                                        if(enter) {
+                                            startTime = System.currentTimeMillis();
+                                            tourViewModel.getArtifacts(uuid, major, minor).observe(getActivity(), new Observer<Artifacts>() {
+                                                @Override
+                                                public void onChanged(Artifacts artifacts) {
+                                                    adapter = new SingleArtifactsAdapter(getContext(), artifacts);
+                                                    recyclerView.setAdapter(adapter);
+                                                }
+                                            });
+                                            enter=false;
+
+                                        }
 
                                         if(startTime!=0) {
                                             long endTime = System.currentTimeMillis();
@@ -195,23 +188,16 @@ public class TourFragment extends Fragment implements BeaconConsumer {
                                             Toast.makeText(getContext(), "Süre" + seconds, Toast.LENGTH_SHORT).show();
 
                                         }
-                                       // showAlert("Ranging after Enter Region", "Beacon detected! RSSI:" + beacon.getRssi() + " UUID: " + beacon.getId1() + "/" + beacon.getId2() + "/" + beacon.getId3());
-                                        // rangingMessageRaised=true;
                                     }
                                     else{
-                                        if(startTime==0)
-                                            startTime = System.currentTimeMillis();
-                                      //  else
-                                            //showAlert("Ranging after Exit Region (<-60)", "Beacon detected! Distance:" + beacon.getRssi() + " UUID: " + beacon.getId1() + "/" + beacon.getId2() + "/" + beacon.getId3());;
-
+                                            recyclerView.setVisibility(View.GONE);
+                                            enter = true;
                                     }
-                                    //rangingMessageRaised=true;
                                 }
 
                             }
                         }
                     });
-                    //  showAlert("didEntryRegion","Entering region:"+region.getUniqueId()+"Beacon detected "+ region.getId1()+"/"+region.getId2()+"/"+region.getId3());
                     entryMessageRaised = true;
                 }
             }
@@ -219,11 +205,6 @@ public class TourFragment extends Fragment implements BeaconConsumer {
             @Override
             public void didExitRegion(Region region) {
                 if (!exitMessageRaised){
-                    /*long endTime = System.currentTimeMillis();
-                    long estimatedTime = endTime - startTime; // Geçen süreyi milisaniye cinsinden elde ediyoruz
-                    double seconds = ((double)estimatedTime/1000)-1;
-                    Toast.makeText(MainActivity.this, "Süre"+seconds, Toast.LENGTH_SHORT).show();*/
-            //        showAlert("didExitRegion","Exiting region:"+region.getUniqueId()+"Beacon detected "+ region.getId1()+"/"+region.getId2()+"/"+region.getId3());
                     exitMessageRaised=true;
                 }
             }
