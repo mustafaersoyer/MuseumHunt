@@ -40,7 +40,7 @@ public class ArtifactsViewModel extends ViewModel {
 
     private void loadArtifacts() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Api.BASE_URL)
+                .baseUrl(Api.Companion.getBASE_URL())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

@@ -42,15 +42,20 @@ import java.util.Collection;
 
 public class TourFragment extends Fragment implements BeaconConsumer {
 
-    private TourViewModel tourViewModel;
+    protected static final String TAG = "MonitoringActivity";
+    public String uuid = "1231",
+            major = "343", minor = "22";
     SingleArtifactsAdapter adapter;
     RecyclerView recyclerView;
-    public String uuid="1231",
-            major="343",minor="22";
-
     long startTime = 0;
-    boolean enter=true;
+    boolean enter = true;
     Context context;
+    private TourViewModel tourViewModel;
+    private Boolean entryMessageRaised = false;
+    private Boolean exitMessageRaised = false;
+    private Boolean rangingMessageRaised = false;
+    private BeaconManager beaconManager = null;
+    private Region beaconRegion;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -78,44 +83,37 @@ public class TourFragment extends Fragment implements BeaconConsumer {
         return root;
     }
 
-
-    private Boolean entryMessageRaised = false;
-    private Boolean exitMessageRaised = false;
-    private Boolean rangingMessageRaised = false;
-    protected static final String TAG = "MonitoringActivity";
-    private BeaconManager beaconManager=null;
-    private Region beaconRegion;
-
-    void beaconSet(){
+    void beaconSet() {
         String iBeaconLayout = "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24";
         beaconManager = BeaconManager.getInstanceForApplication(getContext());
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(iBeaconLayout));
         beaconManager.bind(this);
 
-        beaconManager.setRegionExitPeriod(1000l);
-        Log.d("exitTag",""+beaconManager.getForegroundScanPeriod());
-        Log.d("exitTag",""+beaconManager.getForegroundBetweenScanPeriod());
+        BeaconManager.setRegionExitPeriod(1000l);
+        Log.d("exitTag", "" + beaconManager.getForegroundScanPeriod());
+        Log.d("exitTag", "" + beaconManager.getForegroundBetweenScanPeriod());
 
     }
-    public void startBeaconMonitoring(){
-        Log.d("startbeaconmonitoring","startBeaconMonitoring Called");
-        try{
-            rangingMessageRaised=false;
-            exitMessageRaised=false;
-            entryMessageRaised=false;
+
+    public void startBeaconMonitoring() {
+        Log.d("startbeaconmonitoring", "startBeaconMonitoring Called");
+        try {
+            rangingMessageRaised = false;
+            exitMessageRaised = false;
+            entryMessageRaised = false;
 
             //beaconRegion = new Region("MyBeacons ", null,null,null);
             // beaconRegion = new Region("E2C Beacon", Identifier.parse("e2c56DB5-DFFB-48D2-B060-D0F5A71096E0"),Identifier.parse("0"),Identifier.parse("5"));
             // beaconRegion = new Region("E2C Beacon", Identifier.parse("d897f728-20e6-4780-b90c-bbbc79f6d429"),Identifier.parse("38045"),Identifier.parse("9566"));
-            beaconRegion = new Region("E2C Beacon", Identifier.parse("8861d9cb-39e6-4b90-8308-4eb5da394cc4"),Identifier.parse("19"),Identifier.parse("5"));
+            beaconRegion = new Region("E2C Beacon", Identifier.parse("8861d9cb-39e6-4b90-8308-4eb5da394cc4"), Identifier.parse("19"), Identifier.parse("5"));
 
             beaconManager.startMonitoringBeaconsInRegion(beaconRegion);
-        }catch (RemoteException e){
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
     }
 
-    void getPermission(){
+    void getPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (getContext().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -127,7 +125,7 @@ public class TourFragment extends Fragment implements BeaconConsumer {
                     @TargetApi(23)
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        requestPermissions(new String[]{Manifest.permission.BLUETOOTH,Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION},                                123);
+                        requestPermissions(new String[]{Manifest.permission.BLUETOOTH, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 123);
                     }
                 });
                 builder.show();
@@ -137,7 +135,7 @@ public class TourFragment extends Fragment implements BeaconConsumer {
 
     @Override
     public void onBeaconServiceConnect() {
-        Log.d(TAG,"onBeaconServiceConnect Called");
+        Log.d(TAG, "onBeaconServiceConnect Called");
         beaconManager.addMonitorNotifier(new MonitorNotifier() {
             @Override
             public void didEnterRegion(Region region) {
@@ -149,7 +147,7 @@ public class TourFragment extends Fragment implements BeaconConsumer {
                         //beaconRegion = new Region("E2C Beacon", Identifier.parse("e2c56DB5-DFFB-48D2-B060-D0F5A71096E0"),Identifier.parse("0"),Identifier.parse("5"));
                         //beaconRegion = new Region("E2C Beacon", Identifier.parse("d897f728-20e6-4780-b90c-bbbc79f6d429"),Identifier.parse("38045"),Identifier.parse("9566"));//tx0
                         // beaconRegion = new Region("E2C Beacon", Identifier.parse("c3a55f0f-5ba6-4b01-a1c2-e251fd0e1ed4"),Identifier.parse("64273"),Identifier.parse("64807"));
-                         beaconRegion = new Region("E2C Beacon", Identifier.parse("8861d9cb-39e6-4b90-8308-4eb5da394cc4"),Identifier.parse("19"),Identifier.parse("5"));
+                        beaconRegion = new Region("E2C Beacon", Identifier.parse("8861d9cb-39e6-4b90-8308-4eb5da394cc4"), Identifier.parse("19"), Identifier.parse("5"));
                         Toast.makeText(getContext(), "Enter Region TRY", Toast.LENGTH_SHORT).show();
 
                         beaconManager.startRangingBeaconsInRegion(beaconRegion);
@@ -168,7 +166,7 @@ public class TourFragment extends Fragment implements BeaconConsumer {
                                         minor = beacon.getId3().toString();
 
                                         recyclerView.setVisibility(View.VISIBLE);
-                                        if(enter) {
+                                        if (enter) {
                                             startTime = System.currentTimeMillis();
                                             tourViewModel.getArtifacts(uuid, major, minor).observe(getActivity(), new Observer<Artifacts>() {
                                                 @Override
@@ -177,21 +175,20 @@ public class TourFragment extends Fragment implements BeaconConsumer {
                                                     recyclerView.setAdapter(adapter);
                                                 }
                                             });
-                                            enter=false;
+                                            enter = false;
 
                                         }
 
-                                        if(startTime!=0) {
+                                        if (startTime != 0) {
                                             long endTime = System.currentTimeMillis();
                                             long estimatedTime = endTime - startTime; // Geçen süreyi milisaniye cinsinden elde ediyoruz
                                             double seconds = ((double) estimatedTime / 1000);
                                             Toast.makeText(context, "Süre" + seconds, Toast.LENGTH_SHORT).show();
 
                                         }
-                                    }
-                                    else{
-                                            recyclerView.setVisibility(View.GONE);
-                                            enter = true;
+                                    } else {
+                                        recyclerView.setVisibility(View.GONE);
+                                        enter = true;
                                     }
                                 }
 
@@ -204,11 +201,12 @@ public class TourFragment extends Fragment implements BeaconConsumer {
 
             @Override
             public void didExitRegion(Region region) {
-                if (!exitMessageRaised) exitMessageRaised=true;
+                if (!exitMessageRaised) exitMessageRaised = true;
             }
 
             @Override
-            public void didDetermineStateForRegion(int i, Region region) {}
+            public void didDetermineStateForRegion(int i, Region region) {
+            }
         });
 
     }

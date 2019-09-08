@@ -45,7 +45,7 @@ public class TourViewModel extends ViewModel {
     JsonObject jsonObject1;
     private void loadArtifacts(String uuid,String major,String minor) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Api.BASE_URL)
+                .baseUrl(Api.Companion.getBASE_URL())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
