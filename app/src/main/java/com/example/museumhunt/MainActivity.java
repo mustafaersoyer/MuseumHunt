@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     void sessionCheck(){
         session = new SessionManager(getApplicationContext());
 

@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+   <!-- <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,32 +19,32 @@
         app:layout_anchorGravity="bottom|center"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_gravity="bottom|center"
+        android:layout_gravity="bottom|end"
         android:layout_marginBottom="70dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:text="asdasd"
         app:fabCustomSize="75dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/ic_track_changes_black_24dp"/>
-    <ru.dimorinny.floatingtextbutton.FloatingTextButton
-        android:id="@+id/action_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:src="@drawable/ic_track_changes_black_24dp"/>-->
+    <com.me.textfab.FloatingActionButton
+        android:foreground="?android:attr/selectableItemBackground"
         app:floating_background_color="@color/colorAccent"
-        app:floating_left_icon="@drawable/ic_track_changes_black_24dp"
         app:floating_title="Start Tour"
         app:floating_title_color="@android:color/white"
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        app:layout_anchorGravity="bottom|center"
+        android:elevation="0dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_gravity="bottom|center"
-        app:fabCustomSize="75dp"
-
         android:layout_marginBottom="70dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_centerInParent="true"
+
         />
 
 

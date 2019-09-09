@@ -13,48 +13,45 @@ import com.bumptech.glide.Glide;
 import com.example.museumhunt.Model.Artifacts;
 import com.example.museumhunt.R;
 
-public class SingleArtifactsAdapter extends RecyclerView.Adapter<SingleArtifactsAdapter.ArtifactsViewHolder> {
+import java.util.List;
+
+public class HomeArtifactsAdapter extends RecyclerView.Adapter<HomeArtifactsAdapter.ArtifactsViewHolder> {
 
     Context mCtx;
-    Artifacts artifactsList;
+    List<Artifacts> artifactsList;
 
-    public SingleArtifactsAdapter(Context mCtx, Artifacts artifactsList) {
+    public HomeArtifactsAdapter(Context mCtx, List<Artifacts> artifactsList) {
         this.mCtx = mCtx;
         this.artifactsList = artifactsList;
     }
 
     @NonNull
     @Override
-    final public SingleArtifactsAdapter.ArtifactsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public HomeArtifactsAdapter.ArtifactsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mCtx).inflate(R.layout.artifacts_cardview, parent, false);
-        return new SingleArtifactsAdapter.ArtifactsViewHolder(view);
+        return new HomeArtifactsAdapter.ArtifactsViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ArtifactsViewHolder holder, int position) {
-        Artifacts artifacts = artifactsList;
+        Artifacts artifacts = artifactsList.get(position);
         Glide.with(mCtx)
                 .load("http://192.168.10.78:49994"+artifacts.getMainImageURL())
                 .into(holder.imageView);
     }
 
-
-
-
     @Override
     final public int getItemCount() {
-        return 1;
-        //return artifactsList.size();
+        return artifactsList.size();
     }
 
     class ArtifactsViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
-
         public ArtifactsViewHolder(View itemView) {
             super(itemView);
-
-            imageView = itemView.findViewById(R.id.imageViewArt_choose);
+            imageView = itemView.findViewById(R.id.imageViewArt);
         }
     }
+
 }

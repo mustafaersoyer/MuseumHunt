@@ -13,7 +13,7 @@ public class SettingsViewModel extends ViewModel {
     public SettingsViewModel() {
         arrayList = new ArrayList<>();
         arrayList.add("Change your museum location");
-        arrayList.add("Campaigns");
+        arrayList.add("CampaignsFragment");
         arrayList.add("About");
         settingList = new MutableLiveData<>();
         settingList.setValue(arrayList);

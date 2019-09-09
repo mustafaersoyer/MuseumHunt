@@ -64,6 +64,8 @@ public class UserInfo extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int selectedId = radioGroup.getCheckedRadioButtonId();
+                radioButton = findViewById(selectedId);
                 userInfoVM.setGender(radioButton.getText().toString());
                 userInfoVM.setLocation(location);
                 userInfoVM.setAge(editTextAge.getText().toString());
@@ -87,8 +89,7 @@ public class UserInfo extends AppCompatActivity {
     void viewBind(){
 
         radioGroup = findViewById(R.id.rg);
-        int selectedId = radioGroup.getCheckedRadioButtonId();
-        radioButton =  findViewById(R.id.radioMale);
+
         spinner = findViewById(R.id.spinnerLocations);
         btnSave = findViewById(R.id.btnInfo);
         editTextAge = findViewById(R.id.editTextAge);

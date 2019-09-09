@@ -28,7 +28,7 @@ public class ArtifactsAdapter extends RecyclerView.Adapter<ArtifactsAdapter.Arti
     @NonNull
     @Override
     final public ArtifactsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mCtx).inflate(R.layout.artifacts_cardview, parent, false);
+        View view = LayoutInflater.from(mCtx).inflate(R.layout.artifacts_card_choose, parent, false);
         return new ArtifactsViewHolder(view);
     }
 
@@ -52,7 +52,7 @@ public class ArtifactsAdapter extends RecyclerView.Adapter<ArtifactsAdapter.Arti
         public ArtifactsViewHolder(View itemView) {
             super(itemView);
 
-            imageView = itemView.findViewById(R.id.imageViewArt);
+            imageView = itemView.findViewById(R.id.imageViewArt_choose);
         }
     }
 }

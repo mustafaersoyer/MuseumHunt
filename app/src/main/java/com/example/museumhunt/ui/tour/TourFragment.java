@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.museumhunt.Adapters.SingleArtifactsAdapter;
 import com.example.museumhunt.Model.Artifacts;
 import com.example.museumhunt.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.me.textfab.FloatingActionButton;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -39,6 +39,8 @@ import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
 import java.util.Collection;
+
+
 
 public class TourFragment extends Fragment implements BeaconConsumer {
 
@@ -61,7 +63,9 @@ public class TourFragment extends Fragment implements BeaconConsumer {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_tour, container, false);
-        FloatingActionButton floatingActionButton = root.findViewById(R.id.fab);
+
+        FloatingActionButton textFab = (FloatingActionButton) root.findViewById(R.id.fab);
+
 
         recyclerView = root.findViewById(R.id.recyclerViewTour);
         recyclerView.setHasFixedSize(true);
@@ -71,7 +75,7 @@ public class TourFragment extends Fragment implements BeaconConsumer {
         beaconSet();
         getPermission();
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        textFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startBeaconMonitoring();
