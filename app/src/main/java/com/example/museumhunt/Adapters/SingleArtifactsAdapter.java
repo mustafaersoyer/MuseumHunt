@@ -34,11 +34,9 @@ public class SingleArtifactsAdapter extends RecyclerView.Adapter<SingleArtifacts
     public void onBindViewHolder(@NonNull ArtifactsViewHolder holder, int position) {
         Artifacts artifacts = artifactsList;
         Glide.with(mCtx)
-                .load("http://192.168.10.78:49994"+artifacts.getMainImageURL())
+                .load("http://192.168.10.197:49994"+artifacts.getMainImageURL())
                 .into(holder.imageView);
     }
-
-
 
 
     @Override

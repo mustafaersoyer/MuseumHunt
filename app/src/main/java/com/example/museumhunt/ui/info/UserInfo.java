@@ -16,7 +16,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.museumhunt.MainActivity;
 import com.example.museumhunt.R;
-import com.example.museumhunt.SessionManager;
+import com.example.museumhunt.utils.SessionManager;
 import com.example.museumhunt.databinding.InfoBinding;
 
 

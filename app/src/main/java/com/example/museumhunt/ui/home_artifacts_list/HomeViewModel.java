@@ -1,4 +1,4 @@
-package com.example.museumhunt.ui.home;
+package com.example.museumhunt.ui.home_artifacts_list;
 
 import android.util.Log;
 
@@ -63,7 +63,7 @@ public class HomeViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<List<Artifacts>> call, Throwable t) {
-                Log.d("failTag", "fail");
+                Log.d("failTag", "fail "+t);
             }
         });
     }

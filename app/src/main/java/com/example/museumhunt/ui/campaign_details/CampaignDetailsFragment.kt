@@ -1,4 +1,4 @@
-package com.example.museumhunt.ui.campaing_details
+package com.example.museumhunt.ui.campaign_details
 
 import android.os.Bundle
 import android.view.LayoutInflater

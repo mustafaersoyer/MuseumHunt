@@ -1,8 +1,10 @@
-package com.example.museumhunt;
+package com.example.museumhunt.utils;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
+import com.example.museumhunt.MainActivity;
 
 import java.util.HashMap;
 

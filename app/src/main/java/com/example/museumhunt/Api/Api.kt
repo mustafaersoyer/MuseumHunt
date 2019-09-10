@@ -23,6 +23,6 @@ interface Api {
     fun getArtifacts(@Header("Content-Type") type: String, @Body body: JsonObject): Call<Artifacts>
 
     companion object {
-        val BASE_URL = "http://192.168.10.78:44327/api/"
+        val BASE_URL = "http://192.168.10.197:44327/api/"
     }
 }

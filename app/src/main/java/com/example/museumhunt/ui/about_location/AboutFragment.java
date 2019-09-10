@@ -1,4 +1,4 @@
-package com.example.museumhunt.ui.aboutLocation;
+package com.example.museumhunt.ui.about_location;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

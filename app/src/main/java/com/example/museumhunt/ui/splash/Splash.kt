@@ -1,8 +1,9 @@
-package com.example.museumhunt
+package com.example.museumhunt.ui.splash
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import com.example.museumhunt.R
 
 import com.example.museumhunt.ui.info.UserInfo
 
@@ -16,7 +17,7 @@ class Splash : Activity() {
         val timerThread = object : Thread() {
             override fun run() {
                 try {
-                    Thread.sleep(3000)
+                    sleep(3000)
                 } catch (e: InterruptedException) {
                     e.printStackTrace()
                 } finally {

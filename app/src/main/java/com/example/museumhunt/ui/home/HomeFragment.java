@@ -7,18 +7,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.museumhunt.Adapters.HomeArtifactsAdapter;
-import com.example.museumhunt.Model.Artifacts;
 import com.example.museumhunt.R;
-
-import java.util.List;
+import com.example.museumhunt.ui.home_artifacts_list.HomeArtifactsListFragment;
+import com.example.museumhunt.ui.home_artifacts_list.HomeViewModel;
 
 public class HomeFragment extends Fragment {
 
@@ -30,24 +25,12 @@ public class HomeFragment extends Fragment {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        imageView = root.findViewById(R.id.imageViewArt);
 
-
-        final RecyclerView recyclerView;
-
-        recyclerView = root.findViewById(R.id.recyclerViewHome);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        homeViewModel.getAllArtifacts().observe(this, new Observer<List<Artifacts>>() {
-            @Override
-            public void onChanged(@Nullable List<Artifacts> artifactsList) {
-                adapter = new HomeArtifactsAdapter(getContext(), artifactsList);
-                recyclerView.setAdapter(adapter);
-            }
-        });
-
-
+        HomeArtifactsListFragment nextFrag= new HomeArtifactsListFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.host_home, nextFrag, "findThisFragment")
+                .addToBackStack(null)
+                .commit();
 
         return root;
     }

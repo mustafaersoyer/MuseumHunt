@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.museumhunt.R;
-import com.example.museumhunt.ui.settingsmain.SettingsMainFragment;
+import com.example.museumhunt.ui.settings_main.SettingsMainFragment;
 
 public class SettingsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,

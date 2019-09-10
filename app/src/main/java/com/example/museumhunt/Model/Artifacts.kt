@@ -29,5 +29,6 @@ class Artifacts {
     @SerializedName("id")
     @Expose
     var id: String? = null
+    
 
 }

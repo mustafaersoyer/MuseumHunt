@@ -1,4 +1,4 @@
-package com.example.museumhunt.ui.settingsmain;
+package com.example.museumhunt.ui.settings_main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.museumhunt.Adapters.SettingsRecyclerAdapter;
 import com.example.museumhunt.R;
-import com.example.museumhunt.ui.aboutLocation.AboutFragment;
+import com.example.museumhunt.ui.about_location.AboutFragment;
 import com.example.museumhunt.ui.campaigns.CampaignsFragment;
 import com.example.museumhunt.ui.change_location.ChangeLocationFragment;
 
@@ -68,7 +68,6 @@ public class SettingsMainFragment extends Fragment implements SettingsRecyclerAd
                     .replace(R.id.host_settings_fragment, nextFrag, "findThisFragment")
                     .addToBackStack(null)
                     .commit();
-
         }
     }
 }
