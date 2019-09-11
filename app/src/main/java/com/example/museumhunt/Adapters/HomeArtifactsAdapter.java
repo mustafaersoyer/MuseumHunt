@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.example.museumhunt.Model.Artifacts;
 import com.example.museumhunt.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeArtifactsAdapter extends RecyclerView.Adapter<HomeArtifactsAdapter.ViewHolder> {
@@ -22,9 +23,9 @@ public class HomeArtifactsAdapter extends RecyclerView.Adapter<HomeArtifactsAdap
 
     List<Artifacts> artifactsList;
 
-    public HomeArtifactsAdapter(Context mCtx, List<Artifacts> artifactsList) {
+    public HomeArtifactsAdapter(Context mCtx) {
         this.mCtx = mCtx;
-        this.artifactsList = artifactsList;
+        artifactsList = new ArrayList<>();
     }
 
     @NonNull
@@ -37,6 +38,7 @@ public class HomeArtifactsAdapter extends RecyclerView.Adapter<HomeArtifactsAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Artifacts artifacts = artifactsList.get(position);
+        holder.imageView.setOnClickListener(v -> mClickListener.onItemClick(artifacts.getId()));
         Glide.with(mCtx)
                 .load("http://192.168.10.197:49994"+artifacts.getMainImageURL())
                 .into(holder.imageView);
@@ -44,28 +46,26 @@ public class HomeArtifactsAdapter extends RecyclerView.Adapter<HomeArtifactsAdap
 
     @Override
     final public int getItemCount() {
-        return artifactsList.size();
+        return artifactsList == null ? 0 : artifactsList.size();
     }
 
-    final public void setClickListener(HomeArtifactsAdapter.ItemClickListener itemClickListener) {
+    public void setClickListener(HomeArtifactsAdapter.ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView imageView;
+    public void setItems(List<Artifacts> artifactsList) {
+        this.artifactsList = artifactsList;
+        notifyDataSetChanged();
+    }
 
-        ViewHolder(View itemView) {
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView imageView;
+        ViewHolder(final View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageViewArt);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        final public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
         }
     }
     public interface ItemClickListener{
-        void onItemClick(View view, int position);
+        void onItemClick(String id);
     }
 }

@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,9 +23,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.museumhunt.Adapters.SingleArtifactsAdapter;
 import com.example.museumhunt.Model.Artifacts;
 import com.example.museumhunt.R;
@@ -48,7 +49,7 @@ public class TourFragment extends Fragment implements BeaconConsumer {
     public String uuid = "1231",
             major = "343", minor = "22";
     SingleArtifactsAdapter adapter;
-    RecyclerView recyclerView;
+    //RecyclerView recyclerView;
     long startTime = 0;
     boolean enter = true;
     Context context;
@@ -58,18 +59,23 @@ public class TourFragment extends Fragment implements BeaconConsumer {
     private Boolean rangingMessageRaised = false;
     private BeaconManager beaconManager = null;
     private Region beaconRegion;
+    ImageView imageView;
+    TextView textView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_tour, container, false);
 
-        FloatingActionButton textFab = (FloatingActionButton) root.findViewById(R.id.fab);
+        FloatingActionButton textFab =  root.findViewById(R.id.fab);
 
 
-        recyclerView = root.findViewById(R.id.recyclerViewTour);
+     /*   recyclerView = root.findViewById(R.id.recyclerViewTour);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));*/
+
+        imageView = root.findViewById(R.id.imageViewTour);
+
         tourViewModel =
                 ViewModelProviders.of(getActivity()).get(TourViewModel.class);
         beaconSet();
@@ -169,20 +175,23 @@ public class TourFragment extends Fragment implements BeaconConsumer {
                                         major = beacon.getId2().toString();
                                         minor = beacon.getId3().toString();
 
-                                        recyclerView.setVisibility(View.VISIBLE);
+                                       // recyclerView.setVisibility(View.VISIBLE);
                                         if (enter) {
                                             startTime = System.currentTimeMillis();
                                             tourViewModel.getArtifacts(uuid, major, minor).observe(getActivity(), new Observer<Artifacts>() {
                                                 @Override
                                                 public void onChanged(Artifacts artifacts) {
-                                                    adapter = new SingleArtifactsAdapter(getContext(), artifacts);
-                                                    recyclerView.setAdapter(adapter);
+                                                    /*adapter = new SingleArtifactsAdapter(getContext(), artifacts);
+                                                    recyclerView.setAdapter(adapter);*/
+                                                    Glide.with(getContext())
+                                                            .load("http://192.168.10.197:49994"+artifacts.getMainImageURL())
+                                                            .into(imageView);
+                                                    textView.setText(artifacts.getName());
+
                                                 }
                                             });
                                             enter = false;
-
                                         }
-
                                         if (startTime != 0) {
                                             long endTime = System.currentTimeMillis();
                                             long estimatedTime = endTime - startTime; // Geçen süreyi milisaniye cinsinden elde ediyoruz
@@ -191,11 +200,10 @@ public class TourFragment extends Fragment implements BeaconConsumer {
 
                                         }
                                     } else {
-                                        recyclerView.setVisibility(View.GONE);
+                                       // recyclerView.setVisibility(View.GONE);
                                         enter = true;
                                     }
                                 }
-
                             }
                         }
                     });
@@ -209,8 +217,7 @@ public class TourFragment extends Fragment implements BeaconConsumer {
             }
 
             @Override
-            public void didDetermineStateForRegion(int i, Region region) {
-            }
+            public void didDetermineStateForRegion(int i, Region region) { }
         });
 
     }
@@ -233,8 +240,5 @@ public class TourFragment extends Fragment implements BeaconConsumer {
     @Override
     public boolean bindService(Intent intent, ServiceConnection serviceConnection, int i) {
         return getActivity().bindService(intent, serviceConnection, i);
-
     }
-
-
 }
