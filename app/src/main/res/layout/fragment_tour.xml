@@ -57,10 +57,6 @@
         android:layout_marginBottom="70dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_centerInParent="true"
-
-        />
-
-
+        android:layout_centerInParent="true" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

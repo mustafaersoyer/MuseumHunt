@@ -8,7 +8,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.museumhunt.Api.Api;
 import com.example.museumhunt.Model.Artifacts;
-import com.example.museumhunt.Model.BeaconArtId;
+import com.example.museumhunt.Model.Content;
+import com.example.museumhunt.Model.Relation;
 import com.google.gson.JsonObject;
 
 import retrofit2.Call;
@@ -20,8 +21,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ArtDetailViewModel extends ViewModel {
 
     String artifactID;
-    private MutableLiveData<BeaconArtId> beaconArtId;
-    private MutableLiveData<Artifacts> artifacts;
+    private MutableLiveData<Content> content;
+    private MutableLiveData<Relation> relation;
     Call<Artifacts> call1;
     private String id;
 
@@ -30,18 +31,20 @@ public class ArtDetailViewModel extends ViewModel {
 
     }
 
-    public LiveData<Artifacts> getArtifacts(String id) {
-        if (artifacts == null) {
-            artifacts = new MutableLiveData<Artifacts>();
-            this.id=id;
+    public LiveData<Content> getRelation(String id) {
+        if (relation == null) {
+            relation = new MutableLiveData<Relation>();
+            content = new MutableLiveData<Content>();
+           this.id=id;
+            //this.id="497a2d0e-7a2f-4a00-ae56-08d72a29f302";
 
-            loadArtifacts(this.id);
+            loadRelation(this.id);
         }
 
-        return artifacts;
+        return content;
     }
     JsonObject jsonObject1;
-    private void loadArtifacts(String id) {
+    private void loadRelation(String id) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Api.Companion.getBASE_URL())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -51,39 +54,34 @@ public class ArtDetailViewModel extends ViewModel {
         jsonObject.addProperty("id",id);
 
         final Api api = retrofit.create(Api.class);
-        Call<Artifacts> call = api.getArtifacts("application/json",jsonObject);
+        Call<Relation> call = api.getRelation("application/json",jsonObject);
 
 
-        call.enqueue(new Callback<Artifacts>() {
+        call.enqueue(new Callback<Relation>() {
             @Override
-            public void onResponse(Call<Artifacts> call, Response<Artifacts> response) {
-                Log.d("rspTag","responsebody "+response.body());
-
-                artifactID = response.body().toString();
-
-                jsonObject1  = new JsonObject();
-                jsonObject1.addProperty("id", response.body().getId());
-                Log.d("jsonnn",""+jsonObject1.toString());
-                call1 = api.getArtifacts("application/json",jsonObject1);
-
-                call1.enqueue(new Callback<Artifacts>() {
+            public void onResponse(Call<Relation> call, Response<Relation> response) {
+                relation.setValue(response.body());
+                JsonObject jsonObject = new JsonObject();
+                if(relation.getValue().getContentId()!=null)
+                    jsonObject.addProperty("id",relation.getValue().getContentId());
+               // jsonObject.addProperty("id","5d76f184-1817-4cec-8d67-d88d3db90b21");
+                Call<Content> callContent = api.getContent("application/json",jsonObject);
+                callContent.enqueue(new Callback<Content>() {
                     @Override
-                    public void onResponse(Call<Artifacts> call, Response<Artifacts> response) {
-                        artifacts.setValue(response.body());
-                        Log.d("responseArtifactsss","artifact: "+artifacts.toString());
-                        Log.d("responseBooooody","responsebody: "+response.body().toString()); //boş
-
+                    public void onResponse(Call<Content> call, Response<Content> response) {
+                        content.setValue(response.body());
                     }
 
                     @Override
-                    public void onFailure(Call<Artifacts> call, Throwable t) {
-                        Log.d("tourviewfail","fail: "+ t.toString());
+                    public void onFailure(Call<Content> call, Throwable t) {
+                        Log.d("failtagatag","fail: "+t.toString());
                     }
                 });
+
             }
             @Override
-            public void onFailure(Call<Artifacts> call, Throwable t) {
-                Log.d("failTag","fasssil");
+            public void onFailure(Call<Relation> call, Throwable t) {
+                Log.d("failTagtagtt","fasssil: "+t.toString());
             }
         });
     }

@@ -15,7 +15,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.bumptech.glide.Glide;
-import com.example.museumhunt.Model.Artifacts;
+import com.example.museumhunt.Model.Content;
 import com.example.museumhunt.R;
 
 public class ArtifactsDetail extends Fragment {
@@ -32,17 +32,17 @@ public class ArtifactsDetail extends Fragment {
         artDetailViewModel =
                 ViewModelProviders.of(this).get(ArtDetailViewModel.class);
         artImage = root.findViewById(R.id.imageViewArtDetail);
-        artText = root.findViewById(R.id.imageViewDetailText);
-        artDetailViewModel.getArtifacts(id).observe(getActivity(), new Observer<Artifacts>() {
+        artText = root.findViewById(R.id.textViewDetail);
+        
+        artDetailViewModel.getRelation(id).observe(this, new Observer<Content>() {
             @Override
-            public void onChanged(Artifacts artifacts) {
+            public void onChanged(Content content) {
                 Glide.with(getContext())
-                        .load("http://192.168.10.197:49994" + artifacts.getMainImageURL())
+                        .load("http://192.168.10.197:49994"+content.getMainImageURL())
                         .into(artImage);
-                artText.setText(artifacts.getName());
+                Toast.makeText(getContext(), "onchgange", Toast.LENGTH_SHORT).show();
             }
         });
-
 
         return root;
     }

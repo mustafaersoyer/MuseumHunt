@@ -1,7 +1,6 @@
 package com.example.museumhunt.Api
 
-import com.example.museumhunt.Model.Artifacts
-import com.example.museumhunt.Model.BeaconArtId
+import com.example.museumhunt.Model.*
 import com.google.gson.JsonObject
 
 import retrofit2.Call
@@ -21,6 +20,16 @@ interface Api {
 
     @POST("Artifact/GetArtifact")
     fun getArtifacts(@Header("Content-Type") type: String, @Body body: JsonObject): Call<Artifacts>
+
+    @POST("Location/GetLocation")
+    fun getLocation(@Header("Content-Type") type: String, @Body body: JsonObject): Call<Location>
+
+    @POST("Relation/GetRelationsWithArtifact")
+    fun getRelation(@Header("Content-Type") type: String, @Body body: JsonObject): Call<Relation>
+
+    @POST("Content/GetContent")
+    fun getContent(@Header("Content-Type") type: String, @Body body: JsonObject): Call<Content>
+
 
     companion object {
         val BASE_URL = "http://192.168.10.197:44327/api/"

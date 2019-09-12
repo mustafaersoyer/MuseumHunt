@@ -41,8 +41,6 @@ import org.altbeacon.beacon.Region;
 
 import java.util.Collection;
 
-
-
 public class TourFragment extends Fragment implements BeaconConsumer {
 
     protected static final String TAG = "MonitoringActivity";
@@ -67,7 +65,7 @@ public class TourFragment extends Fragment implements BeaconConsumer {
 
         View root = inflater.inflate(R.layout.fragment_tour, container, false);
 
-        FloatingActionButton textFab =  root.findViewById(R.id.fab);
+        FloatingActionButton textFab = root.findViewById(R.id.fab);
 
 
      /*   recyclerView = root.findViewById(R.id.recyclerViewTour);
@@ -100,8 +98,6 @@ public class TourFragment extends Fragment implements BeaconConsumer {
         beaconManager.bind(this);
 
         BeaconManager.setRegionExitPeriod(1000l);
-        Log.d("exitTag", "" + beaconManager.getForegroundScanPeriod());
-        Log.d("exitTag", "" + beaconManager.getForegroundBetweenScanPeriod());
 
     }
 

@@ -12,7 +12,7 @@
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <TextView
-        android:id="@+id/imageViewDetailText"
+        android:id="@+id/textViewDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView" />
