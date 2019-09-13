@@ -29,13 +29,13 @@
         </activity>
 
         <activity
-            android:name=".ui.info.UserInfo"
+            android:name=".UI.info.UserInfo"
             android:label="@string/app_name">
 
         </activity>
 
         <activity
-            android:name=".ui.splash.Splash"
+            android:name=".UI.splash.Splash"
             android:label="@string/app_name">
 
         </activity>

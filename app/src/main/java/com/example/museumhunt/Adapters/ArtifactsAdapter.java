@@ -51,7 +51,6 @@ public class ArtifactsAdapter extends RecyclerView.Adapter<ArtifactsAdapter.Arti
         ImageView imageView;
         public ArtifactsViewHolder(View itemView) {
             super(itemView);
-
             imageView = itemView.findViewById(R.id.imageViewArt_choose);
         }
     }

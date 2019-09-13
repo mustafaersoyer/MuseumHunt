@@ -24,6 +24,9 @@ interface Api {
     @POST("Location/GetLocation")
     fun getLocation(@Header("Content-Type") type: String, @Body body: JsonObject): Call<Location>
 
+    @POST("Location/GetAllLocation")
+    fun getAllLocation(@Header("Content-Type") type: String, @Body body: JsonObject): Call<List<Location>>
+
     @POST("Relation/GetRelationsWithArtifact")
     fun getRelation(@Header("Content-Type") type: String, @Body body: JsonObject): Call<Relation>
 
