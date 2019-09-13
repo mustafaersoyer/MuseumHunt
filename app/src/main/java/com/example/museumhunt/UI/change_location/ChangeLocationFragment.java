@@ -41,7 +41,7 @@ public class ChangeLocationFragment extends Fragment {
             public void onChanged(@Nullable List<Location> locationList) {
                 for(int i=0;i<locationList.size();i++) {
                     a[i] = String.valueOf(locationList.get(i));
-                    Log.d("locationtag",""+a);
+                    Log.d("locationtag",""+a[i].toString());
                 }
             }
         });
