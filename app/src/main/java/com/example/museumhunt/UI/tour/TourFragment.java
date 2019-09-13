@@ -46,6 +46,7 @@ public class TourFragment extends Fragment implements BeaconConsumer {
     protected static final String TAG = "MonitoringActivity";
     public String uuid = "1231",
             major = "343", minor = "22";
+    String title;
     SingleArtifactsAdapter adapter;
     //RecyclerView recyclerView;
     long startTime = 0;
@@ -82,7 +83,15 @@ public class TourFragment extends Fragment implements BeaconConsumer {
         textFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startBeaconMonitoring();
+
+                if(textFab.getTitle().equals("Start Tour")) {
+                    textFab.setTitle("Stop Tour");
+                    startBeaconMonitoring();
+                }
+                else{
+                    textFab.setTitle("Start Tour");
+                    stopBeaconMonitoring();
+                }
             }
         });
 
@@ -115,6 +124,16 @@ public class TourFragment extends Fragment implements BeaconConsumer {
 
             beaconManager.startMonitoringBeaconsInRegion(beaconRegion);
         } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void stopBeaconMonitoring(){
+        Log.d(TAG,"stopBeaconMonitoring Called");
+        try{
+            beaconManager.stopMonitoringBeaconsInRegion(beaconRegion);
+            // beaconManager.stopRangingBeaconsInRegion(beaconRegion);
+        }catch (RemoteException e){
             e.printStackTrace();
         }
     }

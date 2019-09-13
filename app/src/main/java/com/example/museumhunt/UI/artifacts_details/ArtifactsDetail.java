@@ -41,8 +41,7 @@ public class ArtifactsDetail extends Fragment {
         videoView = root.findViewById(R.id.videoView);
 
         MediaController mediaController = new MediaController(getContext());
-        mediaController.setAnchorView(videoView);
-
+        mediaController.setPadding(145, 0, 145, 110);
         artDetailViewModel.getRelation(id).observe(this, new Observer<Content>() {
             @Override
             public void onChanged(Content content) {
@@ -54,10 +53,11 @@ public class ArtifactsDetail extends Fragment {
                     tvName.setText(content.getName());
                     tvDescription.setText(content.getDescription());
                     tvTitle.setText(content.getTitle());
+                    mediaController.setAnchorView(videoView);
                     videoView.setMediaController(mediaController);
                    // videoView.setVideoURI("http://192.168.10.197:49994" + content.getVideoURL());
                     videoView.setVideoPath("http://192.168.10.197:49994" + content.getVideoURL());
-                    videoView.start();
+                    //videoView.start();
                 }
             }
         });

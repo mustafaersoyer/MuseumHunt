@@ -57,13 +57,13 @@ public class ChangeLocationViewModel extends ViewModel {
 
                 //finally we are setting the list to our MutableLiveData
                 locationList.setValue(response.body());
-                Log.d("responseTag", "response: " + locationList.toString());
+                Log.d("responseTag", "responsexxxx: " + locationList.toString());
 
             }
 
             @Override
             public void onFailure(Call<List<Location>> call, Throwable t) {
-                Log.d("failTag", "fail "+t);
+                Log.d("failTaggggggx", "fail "+t);
             }
         });
     }
