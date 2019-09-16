@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.example.museumhunt.R
 
-import com.example.museumhunt.UI.info.UserInfo
+import com.example.museumhunt.UI.info.UserInfoActivity
 
 class Splash : Activity() {
 
@@ -21,7 +21,7 @@ class Splash : Activity() {
                 } catch (e: InterruptedException) {
                     e.printStackTrace()
                 } finally {
-                    val intent = Intent(this@Splash, UserInfo::class.java)
+                    val intent = Intent(this@Splash, UserInfoActivity::class.java)
                     startActivity(intent)
                 }
             }

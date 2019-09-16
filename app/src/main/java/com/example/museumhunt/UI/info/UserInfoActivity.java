@@ -18,7 +18,7 @@ import com.example.museumhunt.R;
 import com.example.museumhunt.Utils.SessionManager;
 
 
-public class UserInfo extends AppCompatActivity {
+public class UserInfoActivity extends AppCompatActivity {
 
     SessionManager session;
     Button btnSave;
@@ -31,14 +31,14 @@ public class UserInfo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      /*  InfoBinding infoBinding = DataBindingUtil.setContentView(this, R.layout.info);
+      /*  InfoBinding infoBinding = DataBindingUtil.setContentView(this, R.layout.activity_info);
         infoBinding.setViewModel(new UserInfoViewModel());
         infoBinding.executePendingBindings();*/
 
         session = new SessionManager(getApplicationContext());
 
         if (session.isLoggedIn() == true){
-            startActivity(new Intent(UserInfo.this, MainActivity.class));
+            startActivity(new Intent(UserInfoActivity.this, MainActivity.class));
         }
 
         viewBind();
@@ -73,10 +73,10 @@ public class UserInfo extends AppCompatActivity {
 
                 if(gender!=null && userInfoVM.getLocation()!=null && age!=null) {
                     session.createLoginSession(age, userInfoVM.getLocation(), gender);
-                    startActivity(new Intent(UserInfo.this, MainActivity.class));
+                    startActivity(new Intent(UserInfoActivity.this, MainActivity.class));
                 }
                 else{
-                    Toast.makeText(UserInfo.this, "age: "+age+" gender "+gender + " Loc "+ location, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserInfoActivity.this, "age: "+age+" gender "+gender + " Loc "+ location, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -85,9 +85,7 @@ public class UserInfo extends AppCompatActivity {
     }
 
     void viewBind(){
-
         radioGroup = findViewById(R.id.rg);
-
         spinner = findViewById(R.id.spinnerLocations);
         btnSave = findViewById(R.id.btnInfo);
         editTextAge = findViewById(R.id.editTextAge);

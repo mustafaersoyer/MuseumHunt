@@ -10,7 +10,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.museumhunt.UI.info.UserInfo;
+import com.example.museumhunt.UI.info.UserInfoActivity;
 import com.example.museumhunt.Utils.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         age = user.get(SessionManager.KEY_AGE);
 
         if (location==null || gender==null || age==null){
-            startActivity(new Intent(getApplicationContext(), UserInfo.class));
+            startActivity(new Intent(getApplicationContext(), UserInfoActivity.class));
         }
         else{
             Toast.makeText(this, ""+location+" "+gender+" "+age, Toast.LENGTH_SHORT).show();

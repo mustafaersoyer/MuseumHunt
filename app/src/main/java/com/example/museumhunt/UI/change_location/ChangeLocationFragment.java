@@ -1,10 +1,10 @@
 package com.example.museumhunt.UI.change_location;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -31,20 +31,29 @@ public class ChangeLocationFragment extends Fragment {
         Toast.makeText(getContext(), "location change", Toast.LENGTH_SHORT).show();
         changeLocationViewModel =
                 ViewModelProviders.of(this).get(ChangeLocationViewModel.class);
-        spinner = root.findViewById(R.id.spinnerLocations);
-        List<String> spinnerArray =  new ArrayList<String>();
-        final List<Location> list = new ArrayList<>();
-        final String[] a = new String[1];
+        return root;
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        spinner = getActivity().findViewById(R.id.locationSpinner);
+
+        ArrayList<String> arrayList = new ArrayList<>();
         changeLocationViewModel.getAllLocation().observe(this, new Observer<List<Location>>() {
             @Override
             public void onChanged(@Nullable List<Location> locationList) {
-                for(int i=0;i<locationList.size();i++) {
-                    a[i] = String.valueOf(locationList.get(i));
-                    Log.d("locationtag",""+a[i].toString());
+                Location location;
+                for (int i=0; i<locationList.size();i++) {
+                    location = locationList.get(i);
+                    arrayList.add(location.getName());
                 }
+
+                ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getContext(),
+                        android.R.layout.simple_spinner_item, arrayList);
+                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(dataAdapter);
             }
         });
-        return root;
     }
 }

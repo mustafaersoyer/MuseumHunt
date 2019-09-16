@@ -5,7 +5,7 @@
 
       <!--  <variable
             name="viewModel"
-            type="com.example.museumhunt.UI.info.UserInfoViewModel" />-->
+            type="com.example.museumhunt.UI.activity_info.UserInfoViewModel" />-->
     </data>
     <LinearLayout
         android:layout_width="wrap_content"
