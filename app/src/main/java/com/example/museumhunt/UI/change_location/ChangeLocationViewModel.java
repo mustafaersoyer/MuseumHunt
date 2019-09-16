@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.museumhunt.Api.Api;
 import com.example.museumhunt.Model.Location;
+import com.example.museumhunt.Utils.RetrofitBuilder;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -15,8 +16,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ChangeLocationViewModel extends ViewModel {
     private MutableLiveData<List<Location>> locationList;
@@ -39,15 +38,12 @@ public class ChangeLocationViewModel extends ViewModel {
     }
 
     private void loadLocation() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Api.Companion.getBASE_URL())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        RetrofitBuilder.retrofitBuild();
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("", "");
 
-        Api api = retrofit.create(Api.class);
+        final Api api = RetrofitBuilder.retrofit.create(Api.class);
         Call<List<Location>> call = api.getAllLocation("application/json", jsonObject);
 
 

@@ -62,8 +62,6 @@ public class AboutFragment extends Fragment implements OnMapReadyCallback {
         mapView.onCreate(mapViewBundle);
         mapView.getMapAsync(this);
 
-
-
         return root;
     }
     @Override

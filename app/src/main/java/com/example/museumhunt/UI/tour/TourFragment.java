@@ -10,13 +10,14 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -25,8 +26,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.bumptech.glide.Glide;
-import com.example.museumhunt.Adapters.SingleArtifactsAdapter;
-import com.example.museumhunt.Model.Artifacts;
+import com.example.museumhunt.Model.Content;
 import com.example.museumhunt.R;
 import com.me.textfab.FloatingActionButton;
 
@@ -46,37 +46,38 @@ public class TourFragment extends Fragment implements BeaconConsumer {
     protected static final String TAG = "MonitoringActivity";
     public String uuid = "1231",
             major = "343", minor = "22";
-    String title;
-    SingleArtifactsAdapter adapter;
-    //RecyclerView recyclerView;
-    long startTime = 0;
-    boolean enter = true;
-    Context context;
+        private long startTime = 0;
+    private boolean enter = true;
+    private Context context;
     private TourViewModel tourViewModel;
     private Boolean entryMessageRaised = false;
     private Boolean exitMessageRaised = false;
     private Boolean rangingMessageRaised = false;
     private BeaconManager beaconManager = null;
     private Region beaconRegion;
-    ImageView imageView;
-    TextView textView;
+    private ImageView imageView;
+    private TextView name,title,description;
+    private VideoView videoView;
+    private FloatingActionButton textFab;
+    private MediaController mediaController;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_tour, container, false);
 
-        FloatingActionButton textFab = root.findViewById(R.id.fab);
-
-
-     /*   recyclerView = root.findViewById(R.id.recyclerViewTour);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));*/
-
+        textFab = root.findViewById(R.id.fab);
         imageView = root.findViewById(R.id.imageViewTour);
+        name = root.findViewById(R.id.tvTourName);
+        description = root.findViewById(R.id.tvTourDescription);
+        title = root.findViewById(R.id.tvTourTitle);
+        videoView = root.findViewById(R.id.tourVideoView);
+        videoView.setVisibility(View.GONE);
+
 
         tourViewModel =
                 ViewModelProviders.of(getActivity()).get(TourViewModel.class);
+
         beaconSet();
         getPermission();
 
@@ -97,6 +98,9 @@ public class TourFragment extends Fragment implements BeaconConsumer {
 
         context = inflater.getContext();
 
+        mediaController = new MediaController(getContext());
+        mediaController.setPadding(145, 0, 145, 110);
+
         return root;
     }
 
@@ -105,23 +109,17 @@ public class TourFragment extends Fragment implements BeaconConsumer {
         beaconManager = BeaconManager.getInstanceForApplication(getContext());
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(iBeaconLayout));
         beaconManager.bind(this);
-
         BeaconManager.setRegionExitPeriod(1000l);
 
     }
 
     public void startBeaconMonitoring() {
-        Log.d("startbeaconmonitoring", "startBeaconMonitoring Called");
         try {
             rangingMessageRaised = false;
             exitMessageRaised = false;
             entryMessageRaised = false;
-
             //beaconRegion = new Region("MyBeacons ", null,null,null);
-            // beaconRegion = new Region("E2C Beacon", Identifier.parse("e2c56DB5-DFFB-48D2-B060-D0F5A71096E0"),Identifier.parse("0"),Identifier.parse("5"));
-            // beaconRegion = new Region("E2C Beacon", Identifier.parse("d897f728-20e6-4780-b90c-bbbc79f6d429"),Identifier.parse("38045"),Identifier.parse("9566"));
             beaconRegion = new Region("E2C Beacon", Identifier.parse("8861d9cb-39e6-4b90-8308-4eb5da394cc4"), Identifier.parse("19"), Identifier.parse("5"));
-
             beaconManager.startMonitoringBeaconsInRegion(beaconRegion);
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -129,10 +127,8 @@ public class TourFragment extends Fragment implements BeaconConsumer {
     }
 
     private void stopBeaconMonitoring(){
-        Log.d(TAG,"stopBeaconMonitoring Called");
         try{
             beaconManager.stopMonitoringBeaconsInRegion(beaconRegion);
-            // beaconManager.stopRangingBeaconsInRegion(beaconRegion);
         }catch (RemoteException e){
             e.printStackTrace();
         }
@@ -146,7 +142,6 @@ public class TourFragment extends Fragment implements BeaconConsumer {
                 builder.setMessage("Please grant location access so this app can detect beacons in the background.");
                 builder.setPositiveButton(android.R.string.ok, null);
                 builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-
                     @TargetApi(23)
                     @Override
                     public void onDismiss(DialogInterface dialog) {
@@ -160,21 +155,15 @@ public class TourFragment extends Fragment implements BeaconConsumer {
 
     @Override
     public void onBeaconServiceConnect() {
-        Log.d(TAG, "onBeaconServiceConnect Called");
         beaconManager.addMonitorNotifier(new MonitorNotifier() {
             @Override
             public void didEnterRegion(Region region) {
                 if (!entryMessageRaised) {
                     Toast.makeText(context, "Enter Region", Toast.LENGTH_SHORT).show();
-
                     try {
                         //beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
-                        //beaconRegion = new Region("E2C Beacon", Identifier.parse("e2c56DB5-DFFB-48D2-B060-D0F5A71096E0"),Identifier.parse("0"),Identifier.parse("5"));
-                        //beaconRegion = new Region("E2C Beacon", Identifier.parse("d897f728-20e6-4780-b90c-bbbc79f6d429"),Identifier.parse("38045"),Identifier.parse("9566"));//tx0
-                        // beaconRegion = new Region("E2C Beacon", Identifier.parse("c3a55f0f-5ba6-4b01-a1c2-e251fd0e1ed4"),Identifier.parse("64273"),Identifier.parse("64807"));
                         beaconRegion = new Region("E2C Beacon", Identifier.parse("8861d9cb-39e6-4b90-8308-4eb5da394cc4"), Identifier.parse("19"), Identifier.parse("5"));
                         Toast.makeText(getContext(), "Enter Region TRY", Toast.LENGTH_SHORT).show();
-
                         beaconManager.startRangingBeaconsInRegion(beaconRegion);
 
                     } catch (RemoteException e) {
@@ -190,18 +179,22 @@ public class TourFragment extends Fragment implements BeaconConsumer {
                                         major = beacon.getId2().toString();
                                         minor = beacon.getId3().toString();
 
-                                       // recyclerView.setVisibility(View.VISIBLE);
                                         if (enter) {
                                             startTime = System.currentTimeMillis();
-                                            tourViewModel.getArtifacts(uuid, major, minor).observe(getActivity(), new Observer<Artifacts>() {
+                                            tourViewModel.getContent(uuid, major, minor).observe(getActivity(), new Observer<Content>() {
                                                 @Override
-                                                public void onChanged(Artifacts artifacts) {
-                                                    /*adapter = new SingleArtifactsAdapter(getContext(), artifacts);
-                                                    recyclerView.setAdapter(adapter);*/
+                                                public void onChanged(Content content) {
+
+                                                    videoView.setVisibility(View.VISIBLE);
                                                     Glide.with(getContext())
-                                                            .load("http://192.168.10.197:49994"+artifacts.getMainImageURL())
+                                                            .load("http://192.168.10.197:49994"+content.getMainImageURL())
                                                             .into(imageView);
-                                                    textView.setText(artifacts.getName());
+                                                    name.setText(content.getName());
+                                                    description.setText(content.getDescription());
+                                                    title.setText(content.getTitle());
+                                                    mediaController.setAnchorView(videoView);
+                                                    videoView.setMediaController(mediaController);
+                                                    videoView.setVideoPath("http://192.168.10.197:49994" + content.getVideoURL());
 
                                                 }
                                             });
@@ -212,10 +205,8 @@ public class TourFragment extends Fragment implements BeaconConsumer {
                                             long estimatedTime = endTime - startTime; // Geçen süreyi milisaniye cinsinden elde ediyoruz
                                             double seconds = ((double) estimatedTime / 1000);
                                             Toast.makeText(context, "Süre" + seconds, Toast.LENGTH_SHORT).show();
-
                                         }
                                     } else {
-                                       // recyclerView.setVisibility(View.GONE);
                                         enter = true;
                                     }
                                 }

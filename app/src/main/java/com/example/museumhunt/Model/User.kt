@@ -5,14 +5,5 @@ class User {
     var age: String? = null
     var location: String? = null
 
-    constructor(name: String, age: String, location: String) {
-        this.gender = name
-        this.age = age
-        this.location = location
-    }
-
-    constructor(){
-
-    }
 
 }

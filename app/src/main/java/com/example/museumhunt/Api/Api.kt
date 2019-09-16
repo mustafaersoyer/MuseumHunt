@@ -33,6 +33,9 @@ interface Api {
     @POST("Content/GetContent")
     fun getContent(@Header("Content-Type") type: String, @Body body: JsonObject): Call<Content>
 
+    @POST("Content/GetContentWithBeacon")
+    fun getContentByBeacon(@Header("Content-Type") type: String, @Body body: JsonObject): Call<Content>
+
 
     companion object {
         val BASE_URL = "http://192.168.10.197:44327/api/"

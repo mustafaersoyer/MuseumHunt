@@ -1,12 +1,10 @@
 package com.example.museumhunt.UI.home_artifacts_list;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,20 +26,20 @@ public class HomeArtifactsListFragment extends Fragment implements HomeArtifacts
     private HomeViewModel homeViewModel;
     HomeArtifactsAdapter adapter;
     ImageView imageView;
+    RecyclerView recyclerView;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
+    final public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home_artifacts_list, container, false);
 
         imageView = root.findViewById(R.id.imageViewArt);
-
-        final RecyclerView recyclerView;
-
         recyclerView = root.findViewById(R.id.recyclerViewHome);
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         adapter = new HomeArtifactsAdapter(getContext());
         recyclerView.setAdapter(adapter);
         adapter.setClickListener(this);
@@ -52,18 +50,15 @@ public class HomeArtifactsListFragment extends Fragment implements HomeArtifacts
                 adapter.setItems(artifactsList);
             }
         });
-
         return root;
     }
+
     @Override
-    public void onItemClick(String id) {
+    final public void onItemClick(String id) {
         ArtifactsDetail nextFrag= new ArtifactsDetail(id);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.host_home, nextFrag, "findThisFragment")
                 .addToBackStack(null)
                 .commit();
-
-        Toast.makeText(getContext(), "deeemememmed", Toast.LENGTH_SHORT).show();
-        Log.d("lodtag","axzcz");
     }
 }

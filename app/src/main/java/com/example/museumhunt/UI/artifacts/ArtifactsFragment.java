@@ -22,15 +22,15 @@ import java.util.List;
 public class ArtifactsFragment extends Fragment {
 
     private ArtifactsViewModel artifactsViewModel;
-    ArtifactsAdapter adapter;
+    private ArtifactsAdapter adapter;
+    private RecyclerView recyclerView;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         artifactsViewModel =
                 ViewModelProviders.of(this).get(ArtifactsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_artifacts, container, false);
-
-        final RecyclerView recyclerView;
 
         recyclerView = root.findViewById(R.id.recyclerViewArt);
         recyclerView.setHasFixedSize(true);
@@ -43,7 +43,6 @@ public class ArtifactsFragment extends Fragment {
                 recyclerView.setAdapter(adapter);
             }
         });
-
 
         return root;
     }
