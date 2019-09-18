@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.museumhunt.Adapters.HomeArtifactsAdapter;
 import com.example.museumhunt.Model.Artifacts;
 import com.example.museumhunt.R;
-import com.example.museumhunt.UI.artifacts_details.ArtifactsDetail;
+import com.example.museumhunt.UI.artifacts_details.ArtifactsDetailFragment;
 
 import java.util.List;
 
@@ -34,7 +34,6 @@ public class HomeArtifactsListFragment extends Fragment implements HomeArtifacts
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home_artifacts_list, container, false);
 
-        imageView = root.findViewById(R.id.imageViewArt);
         recyclerView = root.findViewById(R.id.recyclerViewHome);
 
         recyclerView.setHasFixedSize(true);
@@ -55,7 +54,7 @@ public class HomeArtifactsListFragment extends Fragment implements HomeArtifacts
 
     @Override
     final public void onItemClick(String id) {
-        ArtifactsDetail nextFrag= new ArtifactsDetail(id);
+        ArtifactsDetailFragment nextFrag= new ArtifactsDetailFragment(id);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.host_home, nextFrag, "findThisFragment")
                 .addToBackStack(null)

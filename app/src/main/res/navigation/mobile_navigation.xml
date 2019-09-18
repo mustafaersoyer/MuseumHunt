@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.museumhunt.UI.home.HomeFragment"
+        android:name="com.example.museumhunt.UI.home_host.HomeHostFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
 
@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.museumhunt.UI.artifacts.ArtifactsFragment"
+        android:name="com.example.museumhunt.UI.artifacts_selection.ArtifactsFragment"
         android:label="@string/title_artifacts"
         tools:layout="@layout/fragment_artifacts" />
 
@@ -26,7 +26,7 @@
         tools:layout="@layout/fragment_tour" />
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="com.example.museumhunt.UI.settings.SettingsFragment"
+        android:name="com.example.museumhunt.UI.settings_host.SettingsHostFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>

@@ -17,13 +17,16 @@ import androidx.lifecycle.ViewModelProviders;
 import com.bumptech.glide.Glide;
 import com.example.museumhunt.Model.Location;
 import com.example.museumhunt.R;
+import com.example.museumhunt.UI.settings_main.SettingsMainFragment;
+import com.example.museumhunt.Utils.OnBackPressed;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-public class AboutFragment extends Fragment implements OnMapReadyCallback {
+public class AboutFragment extends Fragment implements OnMapReadyCallback, OnBackPressed {
     AboutViewModel aboutViewModel;
     ImageView imageView;
     TextView textView;
@@ -49,7 +52,6 @@ public class AboutFragment extends Fragment implements OnMapReadyCallback {
                         .load("http://192.168.10.197:49994"+location.getPhotoURL())
                         .into(imageView);
                 textView.setText(location.getName());
-                Toast.makeText(getContext(), "asdasdasdzxczxczxczxc", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -112,9 +114,20 @@ public class AboutFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        gmap = googleMap;
-        gmap.setMinZoomPreference(12);
-        LatLng ny = new LatLng(40.7143528, -74.0059731);
-        gmap.moveCamera(CameraUpdateFactory.newLatLng(ny));
+
+        LatLng galataKulesi = new LatLng(41.025629, 28.974138);
+        googleMap.addMarker(new MarkerOptions().position(galataKulesi).title("Burası Galata Kulesi"));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(galataKulesi));
+        googleMap.setMinZoomPreference(12);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        SettingsMainFragment nextFrag= new SettingsMainFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.host_settings_fragment, nextFrag, "findThisFragment")
+                .addToBackStack(null)
+                .commit();
     }
 }

@@ -15,12 +15,12 @@ import com.example.museumhunt.R;
 
 import java.util.List;
 
-public class ArtifactsAdapter extends RecyclerView.Adapter<ArtifactsAdapter.ArtifactsViewHolder> {
+public class ArtifactsSelectionAdapter extends RecyclerView.Adapter<ArtifactsSelectionAdapter.ArtifactsViewHolder> {
 
     Context mCtx;
     List<Artifacts> artifactsList;
 
-    public ArtifactsAdapter(Context mCtx, List<Artifacts> artifactsList) {
+    public ArtifactsSelectionAdapter(Context mCtx, List<Artifacts> artifactsList) {
         this.mCtx = mCtx;
         this.artifactsList = artifactsList;
     }

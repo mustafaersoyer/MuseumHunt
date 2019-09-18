@@ -1,4 +1,4 @@
-package com.example.museumhunt.UI.artifacts;
+package com.example.museumhunt.UI.artifacts_selection;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.museumhunt.Adapters.ArtifactsAdapter;
+import com.example.museumhunt.Adapters.ArtifactsSelectionAdapter;
 import com.example.museumhunt.Model.Artifacts;
 import com.example.museumhunt.R;
 
@@ -22,7 +22,7 @@ import java.util.List;
 public class ArtifactsFragment extends Fragment {
 
     private ArtifactsViewModel artifactsViewModel;
-    private ArtifactsAdapter adapter;
+    private ArtifactsSelectionAdapter adapter;
     private RecyclerView recyclerView;
 
 
@@ -39,7 +39,7 @@ public class ArtifactsFragment extends Fragment {
         artifactsViewModel.getAllArtifacts().observe(this, new Observer<List<Artifacts>>() {
             @Override
             public void onChanged(@Nullable List<Artifacts> artifactsList) {
-                adapter = new ArtifactsAdapter(getContext(), artifactsList);
+                adapter = new ArtifactsSelectionAdapter(getContext(), artifactsList);
                 recyclerView.setAdapter(adapter);
             }
         });

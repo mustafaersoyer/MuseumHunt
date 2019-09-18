@@ -30,8 +30,14 @@ interface Api {
     @POST("Relation/GetRelationsWithArtifact")
     fun getRelation(@Header("Content-Type") type: String, @Body body: JsonObject): Call<Relation>
 
+    @POST("Relation/GetRelationsWithContent")
+    fun getRelationContent(@Header("Content-Type") type: String, @Body body: JsonObject): Call<Relation>
+
     @POST("Content/GetContent")
     fun getContent(@Header("Content-Type") type: String, @Body body: JsonObject): Call<Content>
+
+    @POST("Content/GetCampaignContents")
+    fun getCampaignContents(@Header("Content-Type") type: String, @Body body: JsonObject): Call<List<Content>>
 
     @POST("Content/GetContentWithBeacon")
     fun getContentByBeacon(@Header("Content-Type") type: String, @Body body: JsonObject): Call<Content>

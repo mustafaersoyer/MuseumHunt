@@ -1,4 +1,4 @@
-package com.example.museumhunt.UI.info;
+package com.example.museumhunt.UI.user_info;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;

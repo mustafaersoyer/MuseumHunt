@@ -1,4 +1,4 @@
-package com.example.museumhunt.UI.settings;
+package com.example.museumhunt.UI.campaigns_host;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,20 +9,21 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.museumhunt.R;
-import com.example.museumhunt.UI.settings_main.SettingsMainFragment;
+import com.example.museumhunt.UI.campaigns_list.CampaignsListFragment;
 
-public class SettingsFragment extends Fragment {
+public class CampaignsHostFragment extends Fragment {
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_settings, container, false);
-        SettingsMainFragment nextFrag= new SettingsMainFragment();
+        View root = inflater.inflate(R.layout.fragment_host_campaigns, container, false);
+
+        CampaignsListFragment nextFrag= new CampaignsListFragment();
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.host_settings_fragment, nextFrag, "findThisFragment")
+                .replace(R.id.host_campaigns, nextFrag, "findThisFragment")
                 .addToBackStack(null)
                 .commit();
+
         return root;
     }
-
-
 }

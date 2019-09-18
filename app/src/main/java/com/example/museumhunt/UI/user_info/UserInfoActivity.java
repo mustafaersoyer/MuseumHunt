@@ -1,4 +1,4 @@
-package com.example.museumhunt.UI.info;
+package com.example.museumhunt.UI.user_info;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.museumhunt.Adapters.SettingsRecyclerAdapter;
 import com.example.museumhunt.R;
 import com.example.museumhunt.UI.about_location.AboutFragment;
-import com.example.museumhunt.UI.campaigns.CampaignsFragment;
+import com.example.museumhunt.UI.campaigns_host.CampaignsHostFragment;
 import com.example.museumhunt.UI.change_location.ChangeLocationFragment;
 
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class SettingsMainFragment extends Fragment implements SettingsRecyclerAd
                     .addToBackStack(null)
                     .commit();
         }else if(position==1){
-            CampaignsFragment nextFrag= new CampaignsFragment();
+            CampaignsHostFragment nextFrag= new CampaignsHostFragment();
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.host_settings_fragment, nextFrag, "findThisFragment")
                     .addToBackStack(null)

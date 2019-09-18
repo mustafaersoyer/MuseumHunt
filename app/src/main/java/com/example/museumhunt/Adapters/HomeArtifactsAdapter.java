@@ -20,7 +20,6 @@ public class HomeArtifactsAdapter extends RecyclerView.Adapter<HomeArtifactsAdap
 
     Context mCtx;
     private ItemClickListener mClickListener;
-
     List<Artifacts> artifactsList;
 
     public HomeArtifactsAdapter(Context mCtx) {

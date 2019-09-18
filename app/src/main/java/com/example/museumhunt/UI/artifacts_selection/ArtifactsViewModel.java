@@ -1,4 +1,4 @@
-package com.example.museumhunt.UI.artifacts;
+package com.example.museumhunt.UI.artifacts_selection;
 
 import android.util.Log;
 

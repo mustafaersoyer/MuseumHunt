@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.example.museumhunt.R
 
-import com.example.museumhunt.UI.info.UserInfoActivity
+import com.example.museumhunt.UI.user_info.UserInfoActivity
 
 class Splash : Activity() {
 

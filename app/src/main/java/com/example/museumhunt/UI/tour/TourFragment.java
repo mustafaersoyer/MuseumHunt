@@ -41,7 +41,7 @@ import org.altbeacon.beacon.Region;
 
 import java.util.Collection;
 
-public class TourFragment extends Fragment implements BeaconConsumer {
+public class TourFragment extends Fragment implements BeaconConsumer{
 
     protected static final String TAG = "MonitoringActivity";
     public String uuid = "1231",
@@ -103,6 +103,7 @@ public class TourFragment extends Fragment implements BeaconConsumer {
 
         return root;
     }
+
 
     void beaconSet() {
         String iBeaconLayout = "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24";
@@ -184,18 +185,16 @@ public class TourFragment extends Fragment implements BeaconConsumer {
                                             tourViewModel.getContent(uuid, major, minor).observe(getActivity(), new Observer<Content>() {
                                                 @Override
                                                 public void onChanged(Content content) {
-
-                                                    videoView.setVisibility(View.VISIBLE);
-                                                    Glide.with(getContext())
-                                                            .load("http://192.168.10.197:49994"+content.getMainImageURL())
-                                                            .into(imageView);
-                                                    name.setText(content.getName());
-                                                    description.setText(content.getDescription());
-                                                    title.setText(content.getTitle());
-                                                    mediaController.setAnchorView(videoView);
-                                                    videoView.setMediaController(mediaController);
-                                                    videoView.setVideoPath("http://192.168.10.197:49994" + content.getVideoURL());
-
+                                                        videoView.setVisibility(View.VISIBLE);
+                                                        Glide.with(getContext())
+                                                                .load("http://192.168.10.197:49994" + content.getMainImageURL())
+                                                                .into(imageView);
+                                                        name.setText(content.getName());
+                                                        description.setText(content.getDescription());
+                                                        title.setText(content.getTitle());
+                                                        mediaController.setAnchorView(videoView);
+                                                        videoView.setMediaController(mediaController);
+                                                        videoView.setVideoPath("http://192.168.10.197:49994" + content.getVideoURL());
                                                 }
                                             });
                                             enter = false;

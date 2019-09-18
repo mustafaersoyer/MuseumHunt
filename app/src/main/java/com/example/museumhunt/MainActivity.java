@@ -10,7 +10,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.museumhunt.UI.info.UserInfoActivity;
+import com.example.museumhunt.UI.user_info.UserInfoActivity;
 import com.example.museumhunt.Utils.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
