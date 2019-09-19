@@ -10,6 +10,9 @@ IOS version: https://github.com/alperen23230/MuseumHunt
 
 ![alt text](https://github.com/mustafaersoyer/MuseumHunt/blob/master/screenshots/tourpage.png?raw=true)
 
+![alt text](https://github.com/mustafaersoyer/MuseumHunt/blob/master/screenshots/detailpage.png?raw=true)
+
+
 
 ## Used
 
