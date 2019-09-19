@@ -43,7 +43,6 @@ import java.util.Collection;
 
 public class TourFragment extends Fragment implements BeaconConsumer{
 
-    protected static final String TAG = "MonitoringActivity";
     public String uuid = "1231",
             major = "343", minor = "22";
         private long startTime = 0;
@@ -187,14 +186,14 @@ public class TourFragment extends Fragment implements BeaconConsumer{
                                                 public void onChanged(Content content) {
                                                         videoView.setVisibility(View.VISIBLE);
                                                         Glide.with(getContext())
-                                                                .load("http://192.168.10.197:49994" + content.getMainImageURL())
+                                                                .load(R.string.baseURL + content.getMainImageURL())
                                                                 .into(imageView);
                                                         name.setText(content.getName());
                                                         description.setText(content.getDescription());
                                                         title.setText(content.getTitle());
                                                         mediaController.setAnchorView(videoView);
                                                         videoView.setMediaController(mediaController);
-                                                        videoView.setVideoPath("http://192.168.10.197:49994" + content.getVideoURL());
+                                                        videoView.setVideoPath(getContext().getResources().getString(R.string.baseURL) +""+ content.getVideoURL());
                                                 }
                                             });
                                             enter = false;

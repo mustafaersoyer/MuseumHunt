@@ -39,7 +39,7 @@ public class HomeArtifactsAdapter extends RecyclerView.Adapter<HomeArtifactsAdap
         Artifacts artifacts = artifactsList.get(position);
         holder.imageView.setOnClickListener(v -> mClickListener.onItemClick(artifacts.getId()));
         Glide.with(mCtx)
-                .load("http://192.168.10.197:49994"+artifacts.getMainImageURL())
+                .load(mCtx.getResources().getString(R.string.baseURL)+artifacts.getMainImageURL())
                 .into(holder.imageView);
     }
 

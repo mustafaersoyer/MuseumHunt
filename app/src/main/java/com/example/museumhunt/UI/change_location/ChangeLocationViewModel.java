@@ -23,14 +23,14 @@ public class ChangeLocationViewModel extends ViewModel {
 
     public ChangeLocationViewModel() {
         if (locationList == null) {
-            locationList = new MutableLiveData<List<Location>>();
+            locationList = new MutableLiveData<>();
             loadLocation();
         }
     }
 
     public LiveData<List<Location>> getAllLocation() {
         if (locationList == null) {
-            locationList = new MutableLiveData<List<Location>>();
+            locationList = new MutableLiveData<>();
             loadLocation();
         }
 
@@ -50,16 +50,12 @@ public class ChangeLocationViewModel extends ViewModel {
         call.enqueue(new Callback<List<Location>>() {
             @Override
             public void onResponse(Call<List<Location>> call, Response<List<Location>> response) {
-
-                //finally we are setting the list to our MutableLiveData
                 locationList.setValue(response.body());
-                Log.d("responseTag", "responsexxxx: " + locationList.toString());
-
             }
 
             @Override
             public void onFailure(Call<List<Location>> call, Throwable t) {
-                Log.d("failTaggggggx", "fail "+t);
+                Log.d("failTag", "fail "+t);
             }
         });
     }

@@ -17,8 +17,6 @@ import androidx.lifecycle.ViewModelProviders;
 import com.bumptech.glide.Glide;
 import com.example.museumhunt.Model.Location;
 import com.example.museumhunt.R;
-import com.example.museumhunt.UI.settings_main.SettingsMainFragment;
-import com.example.museumhunt.Utils.OnBackPressed;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -26,7 +24,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class AboutFragment extends Fragment implements OnMapReadyCallback, OnBackPressed {
+public class AboutFragment extends Fragment implements OnMapReadyCallback {
     AboutViewModel aboutViewModel;
     ImageView imageView;
     TextView textView;
@@ -45,11 +43,12 @@ public class AboutFragment extends Fragment implements OnMapReadyCallback, OnBac
 
         aboutViewModel =
                 ViewModelProviders.of(this).get(AboutViewModel.class);
+
         aboutViewModel.getLocation().observe(this, new Observer<Location>() {
             @Override
             public void onChanged(@Nullable Location location){
                 Glide.with(getContext())
-                        .load("http://192.168.10.197:49994"+location.getPhotoURL())
+                        .load(getContext().getResources().getString(R.string.baseURL)+location.getPhotoURL())
                         .into(imageView);
                 textView.setText(location.getName());
             }
@@ -120,14 +119,5 @@ public class AboutFragment extends Fragment implements OnMapReadyCallback, OnBac
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(galataKulesi));
         googleMap.setMinZoomPreference(12);
 
-    }
-
-    @Override
-    public void onBackPressed() {
-        SettingsMainFragment nextFrag= new SettingsMainFragment();
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.host_settings_fragment, nextFrag, "findThisFragment")
-                .addToBackStack(null)
-                .commit();
     }
 }

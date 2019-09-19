@@ -43,7 +43,7 @@ public class CampaignAdapter extends RecyclerView.Adapter<CampaignAdapter.ViewHo
         Content content = contentList.get(position);
         holder.imageView.setOnClickListener(v -> mClickListener.onItemClick(content.getId()));
         Glide.with(mCtx)
-                .load("http://192.168.10.197:49994"+content.getMainImageURL())
+                .load(mCtx.getResources().getString(R.string.baseURL)+content.getMainImageURL())
                 .into(holder.imageView);
     }
     public void setItems(List<Content> contentList) {

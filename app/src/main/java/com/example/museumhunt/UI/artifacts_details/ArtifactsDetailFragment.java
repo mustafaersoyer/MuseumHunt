@@ -21,7 +21,7 @@ import com.example.museumhunt.Model.Content;
 import com.example.museumhunt.R;
 
 public class ArtifactsDetailFragment extends Fragment {
-    private String id;
+    private String id,url="";
     ArtDetailViewModel artDetailViewModel;
     ImageView artImage;
     TextView tvName,tvTitle,tvDescription;
@@ -47,17 +47,14 @@ public class ArtifactsDetailFragment extends Fragment {
             public void onChanged(Content content) {
                 if(content!=null) {
                     Glide.with(getContext())
-                            .load("http://192.168.10.197:49994" + content.getMainImageURL())
+                            .load(getContext().getResources().getString(R.string.baseURL) + content.getMainImageURL())
                             .into(artImage);
-                    Toast.makeText(getContext(), "onchgange", Toast.LENGTH_SHORT).show();
                     tvName.setText(content.getName());
                     tvDescription.setText(content.getDescription());
                     tvTitle.setText(content.getTitle());
                     mediaController.setAnchorView(videoView);
                     videoView.setMediaController(mediaController);
-                   // videoView.setVideoURI("http://192.168.10.197:49994" + content.getVideoURL());
-                    videoView.setVideoPath("http://192.168.10.197:49994" + content.getVideoURL());
-                    //videoView.start();
+                    videoView.setVideoPath(getContext().getResources().getString(R.string.baseURL) +""+ content.getVideoURL());
                 }
             }
         });

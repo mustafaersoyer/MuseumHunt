@@ -52,13 +52,13 @@ public class CampaignDetailViewModel extends ViewModel {
 
                     @Override
                     final public void onFailure(Call<Content> call, Throwable t) {
-                        Log.d("failtagatag","fail: "+t.toString());
+                        Log.d("failTag","fail: "+t.toString());
                     }
                 });
             }
             @Override
             final public void onFailure(Call<Relation> call, Throwable t) {
-                Log.d("failTagtagtt","fasssil: "+t.toString());
+                Log.d("failTag","fail: "+t.toString());
             }
         });
     }

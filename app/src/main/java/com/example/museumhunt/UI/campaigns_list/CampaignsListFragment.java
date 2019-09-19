@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,7 +43,6 @@ public class CampaignsListFragment extends Fragment implements CampaignAdapter.I
             @Override
             public void onChanged(@Nullable List<Content> contentList) {
                 campaignAdapter.setItems(contentList);
-                Toast.makeText(getContext(), "onChanged", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -54,7 +52,6 @@ public class CampaignsListFragment extends Fragment implements CampaignAdapter.I
 
     @Override
     public void onItemClick(String id) {
-        Toast.makeText(getContext(), "zzzzzzzzzzzz"+id, Toast.LENGTH_SHORT).show();
         CampaignDetailFragment nextFrag= new CampaignDetailFragment(id);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.host_campaigns, nextFrag, "findThisFragment")

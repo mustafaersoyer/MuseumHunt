@@ -24,14 +24,14 @@ public class ArtifactsViewModel extends ViewModel {
 
     public ArtifactsViewModel() {
         if (artifactsList == null) {
-            artifactsList = new MutableLiveData<List<Artifacts>>();
+            artifactsList = new MutableLiveData<>();
             loadArtifacts();
         }
     }
 
     public LiveData<List<Artifacts>> getAllArtifacts() {
         if (artifactsList == null) {
-            artifactsList = new MutableLiveData<List<Artifacts>>();
+            artifactsList = new MutableLiveData<>();
             loadArtifacts();
         }
 
@@ -54,11 +54,7 @@ public class ArtifactsViewModel extends ViewModel {
         call.enqueue(new Callback<List<Artifacts>>() {
             @Override
             public void onResponse(Call<List<Artifacts>> call, Response<List<Artifacts>> response) {
-
-                //finally we are setting the list to our MutableLiveData
                 artifactsList.setValue(response.body());
-                Log.d("responseTag","response: "+artifactsList.toString());
-
             }
 
             @Override

@@ -21,14 +21,14 @@ public class AboutViewModel extends ViewModel {
 
     public AboutViewModel() {
         if (location == null) {
-            location = new MutableLiveData<Location>();
+            location = new MutableLiveData<>();
             loadLocation();
         }
     }
 
     public LiveData<Location> getLocation() {
         if (location == null) {
-            location = new MutableLiveData<Location>();
+            location = new MutableLiveData<>();
             loadLocation();
         }
 

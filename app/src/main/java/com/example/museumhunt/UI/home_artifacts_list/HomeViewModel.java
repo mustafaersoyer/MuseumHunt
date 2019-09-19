@@ -22,7 +22,7 @@ public class HomeViewModel extends ViewModel {
 
     final public LiveData<List<Artifacts>> getAllArtifacts() {
         if (artifactsList == null) {
-            artifactsList = new MutableLiveData<List<Artifacts>>();
+            artifactsList = new MutableLiveData<>();
             loadArtifacts();
         }
         return artifactsList;
