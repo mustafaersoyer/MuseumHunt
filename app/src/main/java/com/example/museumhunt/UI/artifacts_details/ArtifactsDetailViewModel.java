@@ -16,7 +16,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ArtDetailViewModel extends ViewModel {
+public class ArtifactsDetailViewModel extends ViewModel {
     private MutableLiveData<Content> content;
     private String id;
 

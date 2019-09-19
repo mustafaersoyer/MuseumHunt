@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,6 +40,10 @@ public class ArtifactsSelectionAdapter extends RecyclerView.Adapter<ArtifactsSel
         Glide.with(mCtx)
                 .load(mCtx.getResources().getString(R.string.baseURL)+artifacts.getMainImageURL())
                 .into(holder.imageView);
+        holder.name.setText(artifacts.getName());
+        holder.name.setText(artifacts.get);
+        holder.name.setText(artifacts.getName());
+
     }
 
     @Override
@@ -49,9 +54,12 @@ public class ArtifactsSelectionAdapter extends RecyclerView.Adapter<ArtifactsSel
     class ArtifactsViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
+        TextView name,title,desc;
         public ArtifactsViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageViewArt_choose);
+            title = itemView.findViewById(R.id.title);
+            desc = itemView.findViewById(R.id.description);
         }
     }
 }

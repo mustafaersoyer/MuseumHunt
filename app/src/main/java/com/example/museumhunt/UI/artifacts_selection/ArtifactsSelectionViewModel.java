@@ -18,11 +18,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ArtifactsViewModel extends ViewModel {
+public class ArtifactsSelectionViewModel extends ViewModel {
 
     private MutableLiveData<List<Artifacts>> artifactsList;
 
-    public ArtifactsViewModel() {
+    public ArtifactsSelectionViewModel() {
         if (artifactsList == null) {
             artifactsList = new MutableLiveData<>();
             loadArtifacts();
@@ -63,6 +63,4 @@ public class ArtifactsViewModel extends ViewModel {
             }
         });
     }
-
-
 }

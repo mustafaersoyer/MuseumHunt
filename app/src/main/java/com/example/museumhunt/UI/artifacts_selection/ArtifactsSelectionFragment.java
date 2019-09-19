@@ -19,9 +19,9 @@ import com.example.museumhunt.R;
 
 import java.util.List;
 
-public class ArtifactsFragment extends Fragment {
+public class ArtifactsSelectionFragment extends Fragment {
 
-    private ArtifactsViewModel artifactsViewModel;
+    private ArtifactsSelectionViewModel artifactsViewModel;
     private ArtifactsSelectionAdapter adapter;
     private RecyclerView recyclerView;
 
@@ -29,7 +29,7 @@ public class ArtifactsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         artifactsViewModel =
-                ViewModelProviders.of(this).get(ArtifactsViewModel.class);
+                ViewModelProviders.of(this).get(ArtifactsSelectionViewModel.class);
         View root = inflater.inflate(R.layout.fragment_artifacts, container, false);
 
         recyclerView = root.findViewById(R.id.recyclerViewArt);

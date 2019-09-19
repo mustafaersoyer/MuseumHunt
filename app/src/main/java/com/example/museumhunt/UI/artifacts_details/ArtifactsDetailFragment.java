@@ -21,8 +21,8 @@ import com.example.museumhunt.Model.Content;
 import com.example.museumhunt.R;
 
 public class ArtifactsDetailFragment extends Fragment {
-    private String id,url="";
-    ArtDetailViewModel artDetailViewModel;
+    private String id;
+    ArtifactsDetailViewModel artDetailViewModel;
     ImageView artImage;
     TextView tvName,tvTitle,tvDescription;
     VideoView videoView;
@@ -33,7 +33,7 @@ public class ArtifactsDetailFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_artifacts_details, container, false);
         Toast.makeText(getContext(), "Artifacts Detail", Toast.LENGTH_SHORT).show();
         artDetailViewModel =
-                ViewModelProviders.of(this).get(ArtDetailViewModel.class);
+                ViewModelProviders.of(this).get(ArtifactsDetailViewModel.class);
         artImage = root.findViewById(R.id.imageViewArtDetail);
         tvName = root.findViewById(R.id.textViewName);
         tvTitle = root.findViewById(R.id.textViewTitle);
