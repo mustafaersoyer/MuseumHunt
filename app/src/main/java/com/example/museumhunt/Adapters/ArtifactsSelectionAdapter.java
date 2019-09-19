@@ -41,8 +41,6 @@ public class ArtifactsSelectionAdapter extends RecyclerView.Adapter<ArtifactsSel
                 .load(mCtx.getResources().getString(R.string.baseURL)+artifacts.getMainImageURL())
                 .into(holder.imageView);
         holder.name.setText(artifacts.getName());
-        holder.name.setText(artifacts.get);
-        holder.name.setText(artifacts.getName());
 
     }
 
@@ -54,12 +52,11 @@ public class ArtifactsSelectionAdapter extends RecyclerView.Adapter<ArtifactsSel
     class ArtifactsViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
-        TextView name,title,desc;
+        TextView name;
         public ArtifactsViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageViewArt_choose);
-            title = itemView.findViewById(R.id.title);
-            desc = itemView.findViewById(R.id.description);
+            name = itemView.findViewById(R.id.title);
         }
     }
 }
